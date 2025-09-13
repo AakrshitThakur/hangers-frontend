@@ -20,9 +20,9 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/" className="flex items-center">
-              <span className="text-xl font-bold h-12 w-auto">
-                <img src="/logos/hangers-logo.png" className="w-full h-full" alt="" />
+            <a href="/" className="flex items-center p-1">
+              <span className="h-12 w-auto">
+                <img src="/logos/hangers-logo.png" className="w-full h-full rounded-md" alt="" />
               </span>
             </a>
           </div>
