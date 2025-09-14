@@ -27,7 +27,7 @@
   --radius-box: 1rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
-  --border: 1px solid rgba(255, 255, 255, 0.35);
+  --border: 1px solid rgba(0, 0, 0, 0.35);
   --depth: 0;
   --noise: 0;
   --hover-bg: rgba(0, 0, 0, 0.1);
@@ -39,7 +39,7 @@
   --color-base-200: oklch(23.26% 0.014 253.1);
   --color-base-300: oklch(21.15% 0.012 254.09);
   --color-base-content: oklch(97.807% 0.029 256.847);
-  --color-primary: oklch(57.954% 0.23307 277.1);
+  --color-primary: #605dff;
   --color-primary-content: oklch(96% 0.018 272.314);
   --color-secondary: oklch(65% 0.241 354.308);
   --color-secondary-content: oklch(94% 0.028 342.258);
@@ -60,7 +60,7 @@
   --radius-box: 0.5rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
-  --border: 1px solid rgba(255, 255, 255, 0.35);
+  --border: 1px solid rgba(255, 255, 255, 0.45);
   --depth: 1;
   --noise: 0;
   --hover-bg: rgba(255, 255, 255, 0.1);
@@ -70,6 +70,10 @@ html {
   font-family: "Open Sans", sans-serif;
   background-color: var(--color-base-100);
   color: var(--color-base-content);
+}
+
+*:focus{
+  outline: none;
 }
 
 .color-base-100 {
@@ -92,6 +96,9 @@ html {
 }
 .color-accent {
   background-color: var(--color-accent);
+}
+.color-info {
+  background-color: var(--color-info);
 }
 
 .color-base-content {

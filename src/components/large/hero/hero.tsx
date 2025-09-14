@@ -13,17 +13,17 @@ export default function Hero() {
         </h1>
         <address className="inline text-base text-center">
           ~ Shop No. 1, Near Taxi Stand, Railway Road, Una - 174315{" "}
-          <MapPin strokeWidth={1.25} className="inline h-auto w-5" />
+          <MapPin strokeWidth={1.25} className="inline h-auto w-4" />
         </address>
         <a className="inline text-base text-center" href="tel:+917876746149">
           ~ (+91) 7876746149{" "}
-          <Phone strokeWidth={1.25} className="inline h-auto w-5" />
+          <Phone strokeWidth={1.25} className="inline h-auto w-4" />
         </a>
         {/* Desktop CTA Buttons */}
         <div>
-          <a href="">
+          <a href="/view-all-clothes">
             <button className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content px-3 py-2 cursor-pointer">
-              Get Started
+              Browse Collections
             </button>
           </a>
         </div>
@@ -36,17 +36,17 @@ export default function Hero() {
         <address className="text-base not-italic text-center">
           <span className="inline items-center gap-2">
             ~ Shop No. 1, Near Taxi Stand, Railway Road, Una - 174315{" "}
-            <MapPin strokeWidth={1.25} className="inline h-auto w-5" />
+            <MapPin strokeWidth={1.25} className="inline h-auto w-4" />
           </span>
         </address>
         <a className="inline text-base text-center" href="tel:+917876746149">
           ~ (+91) 7876746149{" "}
-          <Phone strokeWidth={1.25} className="inline h-auto w-5" />
+          <Phone strokeWidth={1.25} className="inline h-auto w-4" />
         </a>
         {/* Desktop CTA Buttons */}
         <div className="text-center">
           <button className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content px-3 py-2">
-            Get Started
+            Browse Collections
           </button>
         </div>
       </div>
