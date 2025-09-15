@@ -57,4 +57,4 @@ function useFetch<T>(props: InputFetch): ResponseFetch<T> {
   return { data: states.data, error: states.error, loading: states.loading };
 }
 
-export { useFetch };
+export default useFetch;

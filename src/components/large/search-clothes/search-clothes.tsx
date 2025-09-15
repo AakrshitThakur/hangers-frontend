@@ -1,16 +1,11 @@
-import { useState } from "react";
 import { Search } from "lucide-react";
 import { CLOTH_CATEGORIES } from "../../../constants/cloth.constants";
 import { capitalizeFirstChar } from "../../../utils/capitalize-first-char";
 import { SORT_CLOTHES } from "../../../constants/cloth.constants";
 
 export default function SearchClothes() {
-  const [query, setQuery] = useState("");
-
   function handleSubmit() {}
   function handleChange() {}
-
-  const handleClear = () => {};
 
   return (
     <section
@@ -32,7 +27,7 @@ export default function SearchClothes() {
           {/* Input Field */}
           <input
             type="text"
-            value={query}
+            value={"sfd"}
             onChange={handleChange}
             placeholder="Search clothes..."
             className="w-full pl-10 pr-20 py-3 text-sm"
