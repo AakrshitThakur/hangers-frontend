@@ -1,7 +1,10 @@
 import { Search } from "lucide-react";
 import { CLOTH_CATEGORIES } from "../../../constants/cloth.constants";
 import { capitalizeFirstChar } from "../../../utils/capitalize-first-char";
-import { SORT_CLOTHES } from "../../../constants/cloth.constants";
+import {
+  SORT_CLOTHES,
+  TOP_3_CLOTHES,
+} from "../../../constants/cloth.constants";
 
 export default function SearchClothes() {
   function handleSubmit() {}
@@ -10,7 +13,7 @@ export default function SearchClothes() {
   return (
     <section
       id="view-all-clothes"
-      className="color-accent color-base-accent h-[75vh] p-10 flex flex-col justify-start gap-5 items-center"
+      className="color-accent color-base-accent p-10 flex flex-col justify-start gap-5 items-center mb-1"
     >
       <h1 className="text-center text-2xl sm:text-3xl md:text-3xl">
         Discover the Elegance of Hangers Apparel
@@ -33,7 +36,8 @@ export default function SearchClothes() {
             className="w-full pl-10 pr-20 py-3 text-sm"
           />
         </div>
-        <div className="flex justify-center items-center gap-5 text-base">
+        {/* all filters */}
+        <div className="flex justify-center items-center gap-5 text-sm">
           <div className="color-base-200 color-base-content solid-border p-2 rounded-full">
             <select className="rounded-xl" name="" id="">
               {CLOTH_CATEGORIES.map((c) => (
@@ -46,7 +50,14 @@ export default function SearchClothes() {
           <div className="color-base-200 color-base-content solid-border p-2 rounded-full">
             <select name="" id="">
               {SORT_CLOTHES.map((c) => (
-                <option value={c}>{capitalizeFirstChar(c)}</option>
+                <option value={c.queryValue}>{c.display}</option>
+              ))}
+            </select>
+          </div>
+          <div className="color-base-200 color-base-content solid-border p-2 rounded-full">
+            <select name="" id="">
+              {TOP_3_CLOTHES.map((c) => (
+                <option value={`${c.queryValue}`}>{c.display}</option>
               ))}
             </select>
           </div>

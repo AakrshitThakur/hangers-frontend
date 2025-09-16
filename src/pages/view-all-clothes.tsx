@@ -8,7 +8,7 @@ const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
 const URL =
   BACKEND_BASE_URL +
-  "/api/v1/users/clothes/all?category=formals&sort=old clothes";
+  "/api/v1/users/clothes/all?category=lehengas&sort=new_clothes";
 const OPTIONS: RequestInit = {
   method: "GET",
   headers: {
@@ -33,8 +33,8 @@ export default function ViewAllClothes() {
     <div id="view-all-clothes">
       <SearchClothes />
       <section
-        id="view-cloths"
-        className="color-base-200 color-base-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
+        id="view-clothes"
+        className="color-base-100 color-base-content grid grid-cols-[repeat(auto-fit,minmax(200px,250px))] justify-center gap-1 p-10"
       >
         {data &&
           data.clothes.map((cloth) => (

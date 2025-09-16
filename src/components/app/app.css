@@ -100,6 +100,12 @@ html {
 .color-info {
   background-color: var(--color-info);
 }
+.color-success {
+  background-color: var(--color-success);
+}
+.color-error {
+  background-color: var(--color-error);
+}
 
 .color-base-content {
   color: var(--color-base-content);
@@ -118,6 +124,12 @@ html {
 }
 .color-info-content {
   color: var(--color-info-content);
+}
+.color-success-content {
+  color: var(--color-success-content);
+}
+.color-error-content {
+  color: var(--color-error-content);
 }
 
 .solid-border {

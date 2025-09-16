@@ -1,33 +1,52 @@
+import { Divide } from "lucide-react";
+import useFetch from "../../../hooks/use-fetch";
+import type { GetAllClothesResponse } from "../../../types/clothes.types";
 import ProductCard from "../product-card/product-card";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+
+const URL = BACKEND_BASE_URL + "/api/v1/users/clothes/all?is_top_3=true";
+const OPTIONS: RequestInit = {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  credentials: "include",
+};
+
 export default function BestSellingProducts() {
+  const { data, error, loading } = useFetch<GetAllClothesResponse>({
+    url: URL,
+    options: OPTIONS,
+  });
+
   return (
     <section
       id="best-selling-products"
-      className="color-base-300 color-base-content py-7 max-w-7xl"
+      className="color-base-100 color-base-content py-7 max-w-7xl"
     >
-      <h2 className="text-xl sm:text-2xl md:text-3xl text-center">Our best selling products</h2>
-      <p className="text-center text-sm mb-3">Don't Miss Out</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-        <ProductCard
-          image="/images/lehenga1.jpg"
-          title="Premium Wireless Headphones"
-          category="Electronics"
-          price={299.99}
-        />
-        <ProductCard
-          image="/images/lehenga2.jpg"
-          title="Classic Leather Jacket"
-          category="Fashion"
-          price={189.99}
-        />
-        <ProductCard
-          image="/images/lehenga3.jpg"
-          title="Artisan Coffee Beans"
-          category="Food & Beverage"
-          price={24.99}
-        />
-      </div>
+      <h2 className="text-xl sm:text-2xl md:text-3xl text-center">
+        Our best selling products
+      </h2>
+      <p className="text-center text-sm">Don't Miss Out</p>
+      {!loading && data && (
+        // auto-fit → The grid will create as many columns as can fit into the container’s width
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,250px))] justify-center gap-1 p-10">
+          {data.clothes.map((cloth) => (
+            <ProductCard
+              _id={cloth._id}
+              title={cloth.title}
+              category={cloth.category}
+              isTop3={cloth.isTop3}
+              images={cloth.images}
+              actualPrice={cloth.actualPrice}
+              discountedPrice={cloth.discountedPrice}
+              createdAt={cloth.createdAt}
+              updatedAt={cloth.updatedAt}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
