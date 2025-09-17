@@ -39,7 +39,7 @@
   --color-base-200: oklch(23.26% 0.014 253.1);
   --color-base-300: oklch(21.15% 0.012 254.09);
   --color-base-content: oklch(97.807% 0.029 256.847);
-  --color-primary: #605dff;
+  --color-primary: oklch(57.954% 0.23307 277.1);
   --color-primary-content: oklch(96% 0.018 272.314);
   --color-secondary: oklch(65% 0.241 354.308);
   --color-secondary-content: oklch(94% 0.028 342.258);
@@ -72,7 +72,7 @@ html {
   color: var(--color-base-content);
 }
 
-*:focus{
+*:focus {
   outline: none;
 }
 
@@ -141,4 +141,41 @@ html {
 
 :hover.hover-bg {
   background-color: var(--hover-bg);
+}
+:hover.hover-bg-success {
+  background-color: var(--color-success);
+}
+
+.loader {
+  width: auto;
+  height: 250px;
+  background: linear-gradient(0.25turn, transparent, #fff, transparent),
+    linear-gradient(#ddd, #ddd), linear-gradient(#ddd, #ddd),
+    linear-gradient(#ddd, #ddd);
+  background-repeat: no-repeat;
+  background-size: 215px 220px, 215px 130px, 100px 15px, 150px 15px;
+  background-position: -215px 0, 0 0, 15px 150px, 15px 180px;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  to {
+    background-position: 215px 0, 0 0, 15px 150px, 15px 180px;
+  }
+}
+
+/* Overall scrollbar styles */
+::-webkit-scrollbar {
+  width: 7.5px; /* Adjust width */
+}
+
+/* Scrollbar track styles */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Scrollbar thumb styles */
+::-webkit-scrollbar-thumb {
+  background: oklch(62.675% 0.00007 271.152); /* Dark gray thumb color */
+  border-radius: 5px; /* Rounded corners for the thumb */
 }

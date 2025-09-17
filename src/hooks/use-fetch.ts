@@ -30,6 +30,7 @@ function useFetch<T>(props: InputFetch): ResponseFetch<T> {
       // error response
       if (!res.ok) {
         const json = await res.json();
+        console.error(json.message);
         setStates({ data: null, error: json.message, loading: false });
       } else {
         // success response
@@ -38,8 +39,10 @@ function useFetch<T>(props: InputFetch): ResponseFetch<T> {
       }
     } catch (error) {
       if (error instanceof Error) {
+        console.error(error.message);
         setStates({ data: null, error: error.message, loading: false });
       } else {
+        console.error(error);
         setStates({ data: null, error: error as string, loading: false });
       }
     }

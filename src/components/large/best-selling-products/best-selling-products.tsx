@@ -1,6 +1,6 @@
-import { Divide } from "lucide-react";
 import useFetch from "../../../hooks/use-fetch";
 import type { GetAllClothesResponse } from "../../../types/clothes.types";
+import SkeletonLoader from "../../small/skeleton/skeleton";
 import ProductCard from "../product-card/product-card";
 
 const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
@@ -29,7 +29,7 @@ export default function BestSellingProducts() {
         Our best selling products
       </h2>
       <p className="text-center text-sm">Don't Miss Out</p>
-      {!loading && data && (
+      {!loading && data ? (
         // auto-fit → The grid will create as many columns as can fit into the container’s width
         <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,250px))] justify-center gap-1 p-10">
           {data.clothes.map((cloth) => (
@@ -44,6 +44,12 @@ export default function BestSellingProducts() {
               createdAt={cloth.createdAt}
               updatedAt={cloth.updatedAt}
             />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,250px))] justify-center gap-1 p-10">
+          {["1", "2", "3", "4"].map(() => (
+            <SkeletonLoader lines={5} />
           ))}
         </div>
       )}

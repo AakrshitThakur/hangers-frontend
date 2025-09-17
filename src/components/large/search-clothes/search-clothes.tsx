@@ -1,14 +1,53 @@
+import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
-import { CLOTH_CATEGORIES } from "../../../constants/cloth.constants";
-import { capitalizeFirstChar } from "../../../utils/capitalize-first-char";
+import { Dropdown } from "../../small/drop-down/drop-down";
 import {
+  CLOTH_CATEGORIES,
   SORT_CLOTHES,
   TOP_3_CLOTHES,
 } from "../../../constants/cloth.constants";
 
-export default function SearchClothes() {
-  function handleSubmit() {}
-  function handleChange() {}
+interface SearchClothesProps {
+  setUrl: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface SetSearchParamsProps {
+  category: string;
+  search: string;
+  sort: string;
+  is_top_3: string;
+}
+
+// constants
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+const URL = BACKEND_BASE_URL + "/api/v1/users/clothes/all";
+
+export default function SearchClothes(props: SearchClothesProps) {
+  const [searchParams, setSearchParams] = useState({
+    category: "",
+    search: "",
+    sort: "",
+    is_top_3: "",
+  });
+
+  // handle submit
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+  }
+  // handle change
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    const target = e.target;
+    setSearchParams({ ...searchParams, [target.name]: target.value });
+  }
+
+  useEffect(() => {
+    // set new params in url
+    const urlWithParams = `${URL}?search=${searchParams.search}&category=${searchParams.category}&sort=${searchParams.sort}&is_top_3=${searchParams.is_top_3}`;
+
+    props.setUrl(urlWithParams);
+  }, [searchParams]);
 
   return (
     <section
@@ -22,7 +61,7 @@ export default function SearchClothes() {
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center gap-3 w-full max-w-2xl"
       >
-        <div className="color-base-200 color-base-content solid-border relative flex items-center w-full text-base rounded-full">
+        <div className="color-base-200 color-base-content solid-border relative flex items-center w-full rounded-full">
           {/* Search Icon */}
           <div className="absolute left-3 flex items-center">
             <Search className="h-4 w-4" />
@@ -30,36 +69,35 @@ export default function SearchClothes() {
           {/* Input Field */}
           <input
             type="text"
-            value={"sfd"}
+            name="search"
+            value={searchParams.search}
             onChange={handleChange}
             placeholder="Search clothes..."
             className="w-full pl-10 pr-20 py-3 text-sm"
           />
         </div>
         {/* all filters */}
-        <div className="flex justify-center items-center gap-5 text-sm">
-          <div className="color-base-200 color-base-content solid-border p-2 rounded-full">
-            <select className="rounded-xl" name="" id="">
-              {CLOTH_CATEGORIES.map((c) => (
-                <option className="color-base-200 color-base-content" value={c}>
-                  {capitalizeFirstChar(c)}
-                </option>
-              ))}
-            </select>
+        <div className="flex justify-center items-center gap-5 text-xs">
+          <div>
+            <Dropdown<SetSearchParamsProps>
+              set={{ setState: setSearchParams, name: "sort" }}
+              options={SORT_CLOTHES}
+              placeholder="---Sort---"
+            />
           </div>
-          <div className="color-base-200 color-base-content solid-border p-2 rounded-full">
-            <select name="" id="">
-              {SORT_CLOTHES.map((c) => (
-                <option value={c.queryValue}>{c.display}</option>
-              ))}
-            </select>
+          <div>
+            <Dropdown<SetSearchParamsProps>
+              set={{ setState: setSearchParams, name: "category" }}
+              options={CLOTH_CATEGORIES}
+              placeholder="---Categories---"
+            />
           </div>
-          <div className="color-base-200 color-base-content solid-border p-2 rounded-full">
-            <select name="" id="">
-              {TOP_3_CLOTHES.map((c) => (
-                <option value={`${c.queryValue}`}>{c.display}</option>
-              ))}
-            </select>
+          <div>
+            <Dropdown<SetSearchParamsProps>
+              set={{ setState: setSearchParams, name: "is_top_3" }}
+              options={TOP_3_CLOTHES}
+              placeholder="---Top 3---"
+            />
           </div>
         </div>
       </form>
