@@ -22,7 +22,11 @@ export function Navbar() {
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center p-1">
               <span className="h-12 w-auto">
-                <img src="/logos/hangers-logo.png" className="w-full h-full rounded-md" alt="" />
+                <img
+                  src="/logos/hangers-logo.png"
+                  className="w-full h-full rounded-md"
+                  alt=""
+                />
               </span>
             </a>
           </div>
@@ -51,9 +55,16 @@ export function Navbar() {
             <a href="">
               <Instagram strokeWidth={1.25} />
             </a>
-            <button className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content px-3 py-2">
-              Get Started
-            </button>
+            <a href="/admins/signin">
+              <button className="inline-flex items-center justify-center rounded-md color-primary color-primary-content px-3 py-2 cursor-pointer">
+                Admin
+              </button>
+            </a>
+            <a href="/view-all-clothes">
+              <button className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content px-3 py-2 leading-tight cursor-pointer">
+                Browse Collections
+              </button>
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -105,20 +116,32 @@ export function Navbar() {
               </div>
               <div className="flex flex-col">
                 <div className="solid-border-b flex justify-start gap-5 pb-2 mb-2">
-                <ToggleMode />
-                <a href="" className="text-sm">
-                  <Youtube strokeWidth={1.25} />
+                  <ToggleMode />
+                  <a href="" className="text-sm">
+                    <Youtube strokeWidth={1.25} />
+                  </a>
+                  <a href="">
+                    <Instagram strokeWidth={1.25} />
+                  </a>
+                </div>
+                <div className="flex flex-col gap-2">
+                <a href="/admins/signin">
+                  <button
+                    className="color-primary color-primary-content w-full rounded-md px-3 py-2 text-left text-base font-medium cursor-pointer leading-tight"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Admin
+                  </button>
                 </a>
-                <a href="">
-                  <Instagram strokeWidth={1.25} />
+                <a href="/view-all-clothes">
+                  <button
+                    className="color-secondary color-secondary-content w-full rounded-md px-3 py-2 text-left text-base font-medium leading-tight cursor-pointer"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Browse Collections
+                  </button>
                 </a>
                 </div>
-                <button
-                  className="color-secondary color-secondary-content w-full rounded-md px-3 py-2 text-left text-base font-medium"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Get Started
-                </button>
               </div>
             </div>
           </div>

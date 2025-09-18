@@ -1,5 +1,11 @@
 import { createRoot } from "react-dom/client";
+import { ToastContainer } from "react-toastify";
 import "./index.css";
 import App from "../app/app.tsx";
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <div id="main">
+    <ToastContainer />
+    <App />
+  </div>
+);

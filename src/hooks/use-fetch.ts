@@ -13,6 +13,10 @@ function useFetch<T>(props: InputFetch): ResponseFetch<T> {
 
   // returning memoized version to call unique APIs
   const fetchApi = useCallback(async () => {
+    if (!props.url) {
+      setStates({ data: null, error: null, loading: false });
+      return;
+    }
     // set initial states
     setStates({ data: null, error: null, loading: true });
 

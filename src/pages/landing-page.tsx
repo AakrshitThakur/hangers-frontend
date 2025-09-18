@@ -3,7 +3,9 @@ import BestSellingProducts from "../components/large/best-selling-products/best-
 
 export default function LandingPage() {
   return (
-    <div id="landing-page">
+    <div
+      id="landing-page"
+    >
       <Hero />
       <BestSellingProducts />
     </div>
