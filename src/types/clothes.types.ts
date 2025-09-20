@@ -19,4 +19,13 @@ interface GetAllClothesResponse {
   clothes: GetAllClothesData[];
 }
 
-export type { GetAllClothesResponse, GetAllClothesData };
+interface CreateCloth {
+  title: string;
+  clothImages: File[];
+  isTop3?: string;
+  category: string;
+  actualPrice: string;
+  discountedPrice: string;
+}
+
+export type { GetAllClothesResponse, GetAllClothesData, CreateCloth };

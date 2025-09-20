@@ -12,6 +12,10 @@ const CLOTH_CATEGORIES = [
   { id: "11", value: "bottoms", display: "bottoms" },
 ];
 
+const CLOTH_CATEGORY_VALUES = CLOTH_CATEGORIES.filter(
+  (c) => c.value !== ""
+).map((c) => c.value);
+
 const SORT_CLOTHES = [
   { id: "1", value: "", display: "---Sort---" },
   { id: "2", value: "new_clothes", display: "New Clothes" },
@@ -28,4 +32,17 @@ const TOP_3_CLOTHES = [
   { id: "3", value: "false", display: "Exclude top 3" },
 ];
 
-export { CLOTH_CATEGORIES, SORT_CLOTHES, TOP_3_CLOTHES };
+const TOP_3_CLOTH_VALUES = TOP_3_CLOTHES.filter((c) => c.value !== "").map(
+  (c) => c.value
+);
+
+const CLOTH_MIME_TYPES = ["image/png", "image/jpg", "image/jpeg"];
+
+export {
+  CLOTH_CATEGORIES,
+  SORT_CLOTHES,
+  TOP_3_CLOTHES,
+  CLOTH_MIME_TYPES,
+  CLOTH_CATEGORY_VALUES,
+  TOP_3_CLOTH_VALUES,
+};

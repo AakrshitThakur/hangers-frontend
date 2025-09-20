@@ -16,7 +16,7 @@
   --color-neutral-content: oklch(89% 0.061 343.231);
   --color-info: oklch(86% 0.127 207.078);
   --color-info-content: oklch(44% 0.11 240.79);
-  --color-success: oklch(84% 0.143 164.978);
+  --color-success: oklch(84.064% 0.14371 164.887);
   --color-success-content: oklch(43% 0.095 166.913);
   --color-warning: oklch(75% 0.183 55.934);
   --color-warning-content: oklch(26% 0.079 36.259);
@@ -106,6 +106,9 @@ html {
 .color-error {
   background-color: var(--color-error);
 }
+.color-warning {
+  background-color: var(--color-warning);
+}
 
 .color-base-content {
   color: var(--color-base-content);
@@ -130,6 +133,9 @@ html {
 }
 .color-error-content {
   color: var(--color-error-content);
+}
+.color-warning-content {
+  color: var(--color-warning-content);
 }
 
 .solid-border {

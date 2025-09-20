@@ -37,7 +37,7 @@ export default function ProductCard(props: GetAllClothesData) {
       <div className="h-auto w-full aspect-[9/12] rounded-lg overflow-hidden cursor-pointer">
         <div className="relative w-full h-full aspect-[9/12] overflow-hidden">
           <img
-            src={props.images[currImageIndex].url || "/placeholder.svg"}
+            src={props.images[currImageIndex]?.url || "/placeholder.svg"}
             alt={props.title}
             className="w-full h-full object-fill bg-center bg-no-repeat transition scale-100 hover:scale-110"
           />

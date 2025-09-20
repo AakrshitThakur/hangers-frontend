@@ -9,7 +9,8 @@ function successNotification(text: string) {
       <p className="inline"> {text}</p>
     </div>,
     {
-      className: "color-success color-success-content solid-border",
+      className:
+        "color-success color-success-content text-base leading-tight solid-border",
       ariaLabel: "Success notification",
       ...TOAST_UI,
     }
@@ -23,7 +24,8 @@ function errorNotification(text: string) {
       <p className="inline"> {text}</p>
     </div>,
     {
-      className: "color-error color-error-content solid-border",
+      className:
+        "color-error color-error-content solid-border text-base leading-tight",
       ariaLabel: "Error notification",
       ...TOAST_UI,
     }
@@ -37,7 +39,8 @@ function infoNotification(text: string) {
       <p className="inline"> {text}</p>
     </div>,
     {
-      className: "color-info color-info-content solid-border",
+      className:
+        "color-info color-info-content solid-border text-base leading-tight",
       ariaLabel: "Info notification",
       ...TOAST_UI,
     }

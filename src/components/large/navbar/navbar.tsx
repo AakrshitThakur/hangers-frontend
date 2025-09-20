@@ -1,12 +1,30 @@
 import { useState } from "react";
 import { Menu, X, Instagram, Youtube } from "lucide-react";
 import ToggleMode from "../../small/toggle-mode/toggle-mode";
+import StaticDropDown from "../../small/static-drop-down/static-drop-down";
 
 const navigation = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
+
+// custom admin drop-down
+const adminNavigations = [
+  { label: "Sign In", href: "/admins/signin" },
+  { label: "Sign Out", href: "/admins/signout" },
+  { label: "Dashboard", href: "/admins/view-all-clothes" },
+];
+const adminDropDown = {
+  classNames: {
+    options: "color-base-200 color-base-content", 
+    select: "color-primary color-base-primary",
+  },
+  headings: {
+    select: "Admin"
+  },
+  options: adminNavigations,
+};
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,11 +73,7 @@ export function Navbar() {
             <a href="">
               <Instagram strokeWidth={1.25} />
             </a>
-            <a href="/admins/signin">
-              <button className="inline-flex items-center justify-center rounded-md color-primary color-primary-content px-3 py-2 cursor-pointer">
-                Admin
-              </button>
-            </a>
+            <StaticDropDown {...adminDropDown} />
             <a href="/view-all-clothes">
               <button className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content px-3 py-2 leading-tight cursor-pointer">
                 Browse Collections
@@ -125,22 +139,22 @@ export function Navbar() {
                   </a>
                 </div>
                 <div className="flex flex-col gap-2">
-                <a href="/admins/signin">
-                  <button
-                    className="color-primary color-primary-content w-full rounded-md px-3 py-2 text-left text-base font-medium cursor-pointer leading-tight"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Admin
-                  </button>
-                </a>
-                <a href="/view-all-clothes">
-                  <button
-                    className="color-secondary color-secondary-content w-full rounded-md px-3 py-2 text-left text-base font-medium leading-tight cursor-pointer"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Browse Collections
-                  </button>
-                </a>
+                  <a href="/admins/signin">
+                    <button
+                      className="color-primary color-primary-content w-full rounded-md px-3 py-2 text-left text-base font-medium cursor-pointer leading-tight"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Admin
+                    </button>
+                  </a>
+                  <a href="/view-all-clothes">
+                    <button
+                      className="color-secondary color-secondary-content w-full rounded-md px-3 py-2 text-left text-base font-medium leading-tight cursor-pointer"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Browse Collections
+                    </button>
+                  </a>
                 </div>
               </div>
             </div>

@@ -52,11 +52,8 @@ export default function SearchClothes(props: SearchClothesProps) {
   return (
     <section
       id="view-all-clothes"
-      className="color-accent color-base-accent p-10 flex flex-col justify-start gap-5 items-center mb-1"
+      className="color-accent color-base-accent w-full flex flex-col justify-center items-center"
     >
-      <h1 className="text-center text-2xl sm:text-3xl md:text-3xl">
-        Discover the Elegance of Hangers Apparel
-      </h1>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center gap-3 w-full max-w-2xl"

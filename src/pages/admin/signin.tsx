@@ -7,7 +7,7 @@ import {
   infoNotification,
   successNotification,
 } from "../../utils/toast.utils";
-import { validateAdminSignin } from "../../utils/validation-auth.utils";
+import { validateAdminSignin } from "../../utils/validations/validation-auth.utils";
 import useFetch from "../../hooks/use-fetch";
 
 // error interface
