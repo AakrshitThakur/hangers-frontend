@@ -1,4 +1,4 @@
-interface GetAllClothesData {
+interface GetClothData {
   _id: string;
   title: string;
   isTop3: string;
@@ -12,11 +12,18 @@ interface GetAllClothesData {
   discountedPrice: string;
   createdAt: string;
   updatedAt: string;
+  isAdmin?: boolean;
 }
 
 interface GetAllClothesResponse {
   message: string;
-  clothes: GetAllClothesData[];
+  clothes: GetClothData[];
+}
+
+// firstly - get the cloth data | lastly - update the cloth data
+interface UpdateClothResponse {
+  message: string;
+  cloth?: GetClothData & { clothImages: File[] };
 }
 
 interface CreateCloth {
@@ -28,4 +35,9 @@ interface CreateCloth {
   discountedPrice: string;
 }
 
-export type { GetAllClothesResponse, GetAllClothesData, CreateCloth };
+export type {
+  GetAllClothesResponse,
+  GetClothData,
+  CreateCloth,
+  UpdateClothResponse,
+};

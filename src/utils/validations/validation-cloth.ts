@@ -20,11 +20,11 @@ function validateCreateCloth(input: CreateCloth) {
     errors.title = "Title must be between 3 and 64 characters long";
     errors.hasErrors = true;
   }
-  if (!input.actualPrice) {
+  if (!parseInt(input.actualPrice)) {
     errors.actualPrice = "Enter a valid actual price";
     errors.hasErrors = true;
   }
-  if (!input.discountedPrice) {
+  if (!parseInt(input.discountedPrice)) {
     errors.discountedPrice = "Enter a valid discounted price";
     errors.hasErrors = true;
   }

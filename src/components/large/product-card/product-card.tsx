@@ -1,8 +1,17 @@
 import { useState } from "react";
-import { Expand, Flame, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  Expand,
+  Flame,
+  ChevronLeft,
+  ChevronRight,
+  Pen,
+  Trash2,
+} from "lucide-react";
 import FullViewportImage from "../full-viewport-image/full-viewport-image";
 import type { GetAllClothesData } from "../../../types/clothes.types";
 
+// handles both users and admins requests
 export default function ProductCard(props: GetAllClothesData) {
   // full view image state
   const [imageUrl, setImageUrl] = useState("");
@@ -39,45 +48,77 @@ export default function ProductCard(props: GetAllClothesData) {
           <img
             src={props.images[currImageIndex]?.url || "/placeholder.svg"}
             alt={props.title}
-            className="w-full h-full object-fill bg-center bg-no-repeat transition scale-100 hover:scale-110"
+            className="w-full h-full object-cover object-center transition scale-100 hover:scale-110"
           />
           {/* absolute elements for controls */}
           <button
             onClick={setToPrev}
-            className="absolute top-1/2 left-1 cursor-pointer"
+            className="absolute w-9 h-auto left-1 top-1/2 -translate-y-1/2 rounded-full overflow-hidden cursor-pointer"
           >
             <ChevronLeft
               strokeWidth={1.25}
-              className="w-7 h-auto text-white bg-black/50 rounded-full"
+              className="w-full h-full text-white bg-black/50"
             />
           </button>
           <button
             onClick={setToNext}
-            className="absolute top-1/2 right-1 bg-transparent cursor-pointer"
+            className="absolute w-9 h-auto right-1 top-1/2 -translate-y-1/2 rounded-full overflow-hidden cursor-pointer"
           >
             <ChevronRight
               strokeWidth={1.25}
-              className="w-7 h-auto text-white bg-black/50 rounded-full"
+              className="w-full h-full text-white bg-black/50"
             />
           </button>
           <button
             onClick={() =>
               handleSetExpandImage(props.images[currImageIndex].url)
             }
-            className="absolute right-1 bottom-1 bg-transparent cursor-pointer"
+            className="absolute right-1 bottom-1 cursor-pointer"
           >
             <Expand
               strokeWidth={1.25}
-              className="w-7 h-auto backdrop-blur-xs text-white bg-black/50 rounded-full"
+              className="w-7 h-auto backdrop-blur-xs text-white bg-black/50 p-1 rounded-full"
             />
           </button>
+
+          {/* Show a flame icon if cloth is top-3 */}
           {props.isTop3 && (
-            <span className="absolute top-1 right-1">
+            <span className="absolute w-7 h-auto right-1 top-1 rounded-full overflow-hidden cursor-pointer">
               <Flame
                 strokeWidth={1.25}
-                className="w-7 h-auto text-amber-400 fill-amber-400 bg-black/50 rounded-full"
+                className="w-full h-full text-amber-400 fill-amber-400 bg-black/50 p-1"
               />
             </span>
+          )}
+
+          {/* add update and delete buttons for admin */}
+          {props.isAdmin && (
+            <>
+              <Link
+                to={`/admins/clothes/${props._id}/update`}
+                onClick={() =>
+                  handleSetExpandImage(props.images[currImageIndex].url)
+                }
+                className="absolute w-7 h-auto left-1 bottom-1 rounded-full overflow-hidden cursor-pointer"
+              >
+                <Pen
+                  strokeWidth={1.25}
+                  className="w-full h-full text-white bg-black/50 p-1"
+                />
+              </Link>
+              <Link
+                to={`/admins/clothes/${props._id}/delete`}
+                onClick={() =>
+                  handleSetExpandImage(props.images[currImageIndex].url)
+                }
+                className="absolute w-7 h-auto left-1 top-1 rounded-full overflow-hidden cursor-pointer"
+              >
+                <Trash2
+                  strokeWidth={1.25}
+                  className="w-7 h-auto text-white bg-black/50 p-1"
+                />
+              </Link>
+            </>
           )}
         </div>
       </div>

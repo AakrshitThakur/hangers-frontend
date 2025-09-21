@@ -86,7 +86,7 @@ export default function AdminSignIn() {
   useEffect(() => {
     if (data) {
       successNotification(data?.message);
-      navigate("/");
+      navigate("/admins/clothes/view-all-clothes");
     } else if (error) {
       errorNotification(error);
       // set states to intial values
@@ -203,7 +203,7 @@ export default function AdminSignIn() {
             <div className="px-6 py-4 space-y-4">
               <button
                 type="submit"
-                className="w-full color-success color-success-content hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="w-full color-success color-success-content hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-md transition-colors cursor-pointer"
                 disabled={isLoading}
                 aria-describedby="signin-button-description"
               >

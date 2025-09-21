@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Shirt, CirclePlus } from "lucide-react";
+import { Shirt, Plus } from "lucide-react";
 import SearchClothes from "../../components/large/search-clothes/search-clothes";
 import type { GetAllClothesResponse } from "../../types/clothes.types";
 import useFetch from "../../hooks/use-fetch";
@@ -47,12 +47,12 @@ export default function AdminViewAllClothes() {
         className="relative color-base-100 color-base-content grid grid-cols-[repeat(auto-fit,minmax(200px,250px))] justify-center gap-1 p-10"
       >
         {/* add new cloth */}
-        {/* <a href="/admins/clothes/create" className="absolute top-1 right-1 w-10 h-10 rounded-full cursor-pointer">
-          <CirclePlus className="w-full h-full text-green-600 rounded-full" strokeWidth={1.25} />
-        </a> */}
-        <a href="/admins/clothes/create" className="absolute color-success top-1 right-1 w-11 h-11 solid-border rounded-full cursor-pointer p-[0.15rem]">
-          <img src="/images/add.png" alt="" />
+        <a href="/admins/clothes/create" className="absolute top-1 right-1 color-success color-success-content w-9 h-9 rounded-full cursor-pointer">
+          <Plus className="w-full h-full rounded-full" strokeWidth={1.25} />
         </a>
+        {/* <a href="/admins/clothes/create" className="absolute color-success top-1 right-1 w-11 h-11 solid-border rounded-full cursor-pointer p-[0.15rem]">
+          <img src="/images/add.png" alt="" />
+        </a> */}
 
         {/* loading skeletons */}
         {loading &&
@@ -77,6 +77,7 @@ export default function AdminViewAllClothes() {
               discountedPrice={cloth.discountedPrice}
               createdAt={cloth.createdAt}
               updatedAt={cloth.updatedAt}
+              isAdmin={true}
             />
           ))
         )}

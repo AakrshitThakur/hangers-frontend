@@ -152,6 +152,40 @@ html {
   background-color: var(--color-success);
 }
 
+.loader {
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+  position: relative;
+}
+.loader::after,
+.loader::before {
+  content: "";
+  box-sizing: border-box;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: var(--color-neutral);
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: animloader 2s linear infinite;
+}
+.loader::after {
+  animation-delay: 1s;
+}
+
+@keyframes animloader {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
 /* Overall scrollbar styles */
 ::-webkit-scrollbar {
   width: 7.5px; /* Adjust width */

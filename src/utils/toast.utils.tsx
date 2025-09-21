@@ -4,13 +4,13 @@ import { TOAST_UI } from "../constants/toast.constants";
 
 function successNotification(text: string) {
   toast(
-    <div>
+    <div className="text-sm leading-tight">
       <CircleCheckBig className="inline" />
       <p className="inline"> {text}</p>
     </div>,
     {
       className:
-        "color-success color-success-content text-base leading-tight solid-border",
+        "color-success color-success-content solid-border",
       ariaLabel: "Success notification",
       ...TOAST_UI,
     }
@@ -19,13 +19,13 @@ function successNotification(text: string) {
 
 function errorNotification(text: string) {
   toast(
-    <div>
+    <div className="text-sm leading-tight">
       <CircleAlert className="inline" />
       <p className="inline"> {text}</p>
     </div>,
     {
       className:
-        "color-error color-error-content solid-border text-base leading-tight",
+        "color-error color-error-content solid-border",
       ariaLabel: "Error notification",
       ...TOAST_UI,
     }
@@ -34,13 +34,13 @@ function errorNotification(text: string) {
 
 function infoNotification(text: string) {
   toast(
-    <div>
+    <div className="text-sm leading-tight">
       <Info className="inline" />
       <p className="inline"> {text}</p>
     </div>,
     {
       className:
-        "color-info color-info-content solid-border text-base leading-tight",
+        "color-info color-info-content solid-border",
       ariaLabel: "Info notification",
       ...TOAST_UI,
     }

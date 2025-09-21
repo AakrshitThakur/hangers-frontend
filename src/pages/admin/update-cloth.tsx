@@ -1,6 +1,6 @@
 import type React from "react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Shield, AlertCircle, Type, Image, IndianRupee } from "lucide-react";
 import {
   CLOTH_MIME_TYPES,
@@ -15,6 +15,10 @@ import { Dropdown } from "../../components/small/drop-down/drop-down";
 import { CLOTH_CATEGORIES } from "../../constants/cloth.constants";
 import useFetch from "../../hooks/use-fetch";
 import PreviewFormImages from "../../components/small/preview-form-images/preview-form-images";
+import type {
+  UpdateClothResponse,
+  GetClothData,
+} from "../../types/clothes.types";
 
 // all interfaces
 interface FormErrors {
@@ -44,29 +48,57 @@ interface PreviewFile {
   name: string;
   url: string;
 }
+type CallApiObj = {
+  UPDATE: {
+    API_UPDATE_BASE_URL: string;
+    API_UPDATE_OPTIONS: {
+      method: "POST";
+      credentials: RequestCredentials;
+    };
+  };
+  READ: {
+    API_READ_BASE_URL: string;
+    API_READ_OPTIONS: {
+      method: "GET";
+      headers: {
+        "Content-Type": "application/json";
+      };
+      credentials: RequestCredentials;
+    };
+  };
+};
 
 // constants
 const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
-const API_URL = BACKEND_BASE_URL + "/api/v1/admins/clothes/create";
-const API_OPTIONS: RequestInit = {
-  method: "POST",
-  // headers: {
-  //   "Content-Type": "multipart/form-data",
-  // },
-  credentials: "include",
+const CALL_API_OBJ: CallApiObj = {
+  UPDATE: {
+    API_UPDATE_BASE_URL: BACKEND_BASE_URL + "/api/v1/admins/clothes",
+    API_UPDATE_OPTIONS: {
+      method: "POST",
+      credentials: "include",
+    },
+  },
+  READ: {
+    API_READ_BASE_URL: BACKEND_BASE_URL + "/api/v1/admins/clothes",
+    API_READ_OPTIONS: {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    },
+  },
 };
 
-export default function AdminCreateCloth() {
+export default function AdminUpdateCloth() {
+  const { clothId } = useParams();
+
   const [isLoading, setIsLoading] = useState(false);
   const [previewFiles, setPreviewFiles] = useState<PreviewFile[]>([]);
-  const [formData, setFormData] = useState<FormData>({
-    title: "",
-    isTop3: "---Top 3---",
-    clothImages: [],
-    category: CLOTH_CATEGORIES[0].display,
-    actualPrice: "",
-    discountedPrice: "",
-  });
+  const [publicIds, setPublicIds] = useState<string[]>([]);
+  const [formData, setFormData] = useState<UpdateClothResponse["cloth"] | null>(
+    null
+  );
   const [errors, setErrors] = useState<FormErrors>({
     title: "",
     clothImages: "",
@@ -81,7 +113,7 @@ export default function AdminCreateCloth() {
   const [callApi, setCallApi] = useState<CallApi>({ url: "", options: {} });
 
   // custom use-fetch hook
-  const { data, error, loading } = useFetch<{ message: string }>({
+  const { data, error, loading } = useFetch<UpdateClothResponse>({
     ...callApi,
   });
 
@@ -102,13 +134,13 @@ export default function AdminCreateCloth() {
       hasErrors: false,
     });
 
-    // check for validation errors
-    const errors = validateCreateCloth(formData);
-    if (errors.hasErrors) {
-      setErrors(errors);
-      setIsLoading(false);
-      return;
-    }
+    // // check for validation errors
+    // const errors = validateCreateCloth(formData);
+    // if (errors.hasErrors) {
+    //   setErrors(errors);
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     const fd = new FormData();
     for (let key in formData) {
@@ -124,8 +156,8 @@ export default function AdminCreateCloth() {
 
     // call api
     setCallApi({
-      url: API_URL,
-      options: { ...API_OPTIONS, body: fd },
+      url: CALL_API_OBJ.UPDATE.API_UPDATE_BASE_URL + `/${clothId}/update`,
+      options: { ...CALL_API_OBJ.UPDATE.API_UPDATE_OPTIONS, body: fd },
     });
   };
 
@@ -159,31 +191,61 @@ export default function AdminCreateCloth() {
         },
       ]);
 
-      // upadte form state
-      setFormData((curr) => ({
-        ...curr,
-        clothImages: [...formData.clothImages, file],
-      }));
+      // update form state
+      setFormData((curr) => {
+        if (curr && typeof curr === "object") {
+          return { ...curr, clothImages: [...formData!.clothImages, file] };
+        }
+        return curr;
+      });
 
       // clear input value so user can select the same file again if needed
       target.value = "";
       return;
     }
-    setFormData((curr) => ({ ...curr, [target.name]: target.value }));
+    // Set non File type fields
+    setFormData((curr) => {
+      if (curr && typeof curr === "object") {
+        return { ...curr, [target.name]: [target.value] };
+      }
+      return curr;
+    });
   };
 
   // execute on api response
   useEffect(() => {
+    if (data?.cloth) {
+      successNotification(data.message);
+      setPreviewFiles(
+        data.cloth.images.map((i) => ({
+          id: i._id,
+          url: i.url,
+          name: i.publicId,
+        }))
+      );
+      setPublicIds(data.cloth.images.map((i) => i.publicId));
+      setFormData({ ...data.cloth, clothImages: [] });
+    }
     if (data) {
-      successNotification(data?.message);
+      successNotification(data.message);
       navigate("/admins/clothes/view-all-clothes");
-    } else if (error) {
+    }
+    if (error) {
       errorNotification(error);
       // set states to intial values
       setCallApi({ url: "", options: {} });
       setIsLoading(false);
     }
   }, [data, loading, error]);
+
+  // get cloth of specific cloth ID
+  useEffect(() => {
+    // call api
+    setCallApi({
+      url: CALL_API_OBJ.READ.API_READ_BASE_URL + `/${clothId}/read`,
+      options: { ...CALL_API_OBJ.READ.API_READ_OPTIONS },
+    });
+  }, []);
 
   console.log(formData);
 
@@ -232,7 +294,7 @@ export default function AdminCreateCloth() {
                     name="title"
                     type="text"
                     placeholder="Classic White T-Shirt"
-                    value={formData.title}
+                    value={formData?.title}
                     onChange={handleInputChange}
                     className="w-full pl-10 pr-3 py-2 solid-border rounded-md"
                   />
@@ -282,56 +344,68 @@ export default function AdminCreateCloth() {
               </div>
 
               {/* preview files */}
-              <div className="space-y-2">
-                {previewFiles.map((f) => (
-                  <PreviewFormImages<PreviewFile[], FormData>
-                    set={{ setPreviewFiles, setFormData }}
-                    id={f.id}
-                    name={f.name}
-                    url={f.url}
+              {setFormData && typeof setFormData === "object" && (
+                <div className="space-y-2">
+                  {previewFiles.map((f) => (
+                    <PreviewFormImages<PreviewFile[], FormData>
+                      set={{ setPreviewFiles, setFormData }}
+                      id={f.id}
+                      name={f.name}
+                      url={f.url}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {setFormData && typeof setFormData === "object" && (
+                <div className="space-y-2">
+                  <label
+                    htmlFor="category"
+                    className="block text-sm font-medium"
+                  >
+                    Category
+                  </label>
+                  <Dropdown<FormData>
+                    set={{ setState: setFormData, name: "category" }}
+                    options={CLOTH_CATEGORIES}
+                    placeholder="---Categories---"
                   />
-                ))}
-              </div>
+                  {errors.category && (
+                    <p
+                      id="title-error"
+                      className="text-xs text-red-600"
+                      role="alert"
+                    >
+                      {errors.category}
+                    </p>
+                  )}
+                </div>
+              )}
 
-              <div className="space-y-2">
-                <label htmlFor="category" className="block text-sm font-medium">
-                  Category
-                </label>
-                <Dropdown<FormData>
-                  set={{ setState: setFormData, name: "category" }}
-                  options={CLOTH_CATEGORIES}
-                  placeholder="---Categories---"
-                />
-                {errors.category && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
+              {setFormData && typeof setFormData === "object" && (
+                <div className="space-y-2">
+                  <label
+                    htmlFor="is-top-3"
+                    className="block text-sm font-medium"
                   >
-                    {errors.category}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="is-top-3" className="block text-sm font-medium">
-                  Is this garment in the top three?
-                </label>
-                <Dropdown<FormData>
-                  set={{ setState: setFormData, name: "isTop3" }}
-                  options={TOP_3_CLOTHES}
-                  placeholder="---Top 3---"
-                />
-                {errors.isTop3 && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
-                    {errors.isTop3}
-                  </p>
-                )}
-              </div>
+                    Is this garment in the top three?
+                  </label>
+                  <Dropdown<FormData>
+                    set={{ setState: setFormData, name: "isTop3" }}
+                    options={TOP_3_CLOTHES}
+                    placeholder="---Top 3---"
+                  />
+                  {errors.isTop3 && (
+                    <p
+                      id="title-error"
+                      className="text-xs text-red-600"
+                      role="alert"
+                    >
+                      {errors.isTop3}
+                    </p>
+                  )}
+                </div>
+              )}
 
               {/* Actual price field */}
               <div className="space-y-2">
@@ -348,7 +422,7 @@ export default function AdminCreateCloth() {
                     name="actualPrice"
                     type="text"
                     placeholder="1299"
-                    value={formData.actualPrice}
+                    value={formData?.actualPrice}
                     onChange={handleInputChange}
                     className="w-full pl-10 pr-3 py-2 solid-border rounded-md"
                   />
@@ -379,7 +453,7 @@ export default function AdminCreateCloth() {
                     name="discountedPrice"
                     type="text"
                     placeholder="799"
-                    value={formData.discountedPrice}
+                    value={formData?.discountedPrice}
                     onChange={handleInputChange}
                     className="w-full pl-10 pr-3 py-2 solid-border rounded-md"
                   />

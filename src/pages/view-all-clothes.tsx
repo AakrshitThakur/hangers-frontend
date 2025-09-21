@@ -30,11 +30,11 @@ export default function ViewAllClothes() {
   return (
     <div id="view-all-clothes" className="min-h-[85vh]">
       <div className="color-accent color-base-accent p-10 flex flex-col justify-start gap-5 items-center mb-1">
-        <h1 className="inline-flex justify-center items-center gap-1 text-center font-semibold text-2xl sm:text-3xl md:text-3xl leading-normal">
-          <span className="inline-block w-12 h-12 aspect-square">
+        <h1 className="text-center font-semibold text-2xl sm:text-3xl md:text-3xl leading-normal">
+          Discover the Elegance of Hangers Apparel
+          <span className="inline-block relative ml-1.5 -bottom-3 w-12 h-12 aspect-square">
             <img className="object-fill" src="/images/hi.png" alt="" />
           </span>
-          Discover the Elegance of Hangers Apparel
         </h1>
         <SearchClothes setUrl={setUrl} />
       </div>

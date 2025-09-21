@@ -40,7 +40,7 @@ function PreviewFormImages<T1, T2>(props: PreviewFormImagesProps<T1, T2>) {
       <div className="flex justify-center items-center gap-1">
         <img
           src={props.url}
-          className="w-10 aspect-[9/12] rounded-md"
+          className="w-10 aspect-[9/12] rounded-md object-cover"
           alt="Preview selected cloth-images"
         />
         <p className="text-base">{props.name}</p>

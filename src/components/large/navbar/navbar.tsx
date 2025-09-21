@@ -13,15 +13,15 @@ const navigation = [
 const adminNavigations = [
   { label: "Sign In", href: "/admins/signin" },
   { label: "Sign Out", href: "/admins/signout" },
-  { label: "Dashboard", href: "/admins/view-all-clothes" },
+  { label: "Dashboard", href: "/admins/clothes/view-all-clothes" },
 ];
 const adminDropDown = {
   classNames: {
-    options: "color-base-200 color-base-content", 
+    options: "color-base-200 color-base-content",
     select: "color-primary color-base-primary",
   },
   headings: {
-    select: "Admin"
+    select: "Admin",
   },
   options: adminNavigations,
 };
@@ -67,7 +67,7 @@ export function Navbar() {
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <ToggleMode />
-            <a href="" className="text-sm">
+            <a href="https://www.youtube.com/@1372ajay" className="text-sm">
               <Youtube strokeWidth={1.25} />
             </a>
             <a href="">
@@ -131,7 +131,10 @@ export function Navbar() {
               <div className="flex flex-col">
                 <div className="solid-border-b flex justify-start gap-5 pb-2 mb-2">
                   <ToggleMode />
-                  <a href="" className="text-sm">
+                  <a
+                    href="https://www.youtube.com/@1372ajay"
+                    className="text-sm"
+                  >
                     <Youtube strokeWidth={1.25} />
                   </a>
                   <a href="">
@@ -139,14 +142,7 @@ export function Navbar() {
                   </a>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <a href="/admins/signin">
-                    <button
-                      className="color-primary color-primary-content w-full rounded-md px-3 py-2 text-left text-base font-medium cursor-pointer leading-tight"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Admin
-                    </button>
-                  </a>
+                  <StaticDropDown {...adminDropDown} />
                   <a href="/view-all-clothes">
                     <button
                       className="color-secondary color-secondary-content w-full rounded-md px-3 py-2 text-left text-base font-medium leading-tight cursor-pointer"
