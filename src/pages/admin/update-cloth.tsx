@@ -1,5 +1,5 @@
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Shield, AlertCircle, Type, Image, IndianRupee } from "lucide-react";
 import {
@@ -10,7 +10,10 @@ import {
   errorNotification,
   successNotification,
 } from "../../utils/toast.utils";
-import { validateCreateCloth } from "../../utils/validations/validation-cloth";
+import {
+  validateCreateCloth,
+  validateUpdateCloth,
+} from "../../utils/validations/validation-cloth";
 import { Dropdown } from "../../components/small/drop-down/drop-down";
 import { CLOTH_CATEGORIES } from "../../constants/cloth.constants";
 import useFetch from "../../hooks/use-fetch";
@@ -18,7 +21,9 @@ import PreviewFormImages from "../../components/small/preview-form-images/previe
 import type {
   UpdateClothResponse,
   GetClothData,
+  GetClothResponse,
 } from "../../types/clothes.types";
+import omit from "../../utils/omit";
 
 // all interfaces
 interface FormErrors {
@@ -35,14 +40,6 @@ interface CallApi {
   url: string;
   options: RequestInit;
 }
-interface FormData {
-  title: string;
-  clothImages: File[];
-  isTop3?: string;
-  category: string;
-  actualPrice: string;
-  discountedPrice: string;
-}
 interface PreviewFile {
   id: string;
   name: string;
@@ -52,7 +49,7 @@ type CallApiObj = {
   UPDATE: {
     API_UPDATE_BASE_URL: string;
     API_UPDATE_OPTIONS: {
-      method: "POST";
+      method: "PATCH";
       credentials: RequestCredentials;
     };
   };
@@ -74,7 +71,7 @@ const CALL_API_OBJ: CallApiObj = {
   UPDATE: {
     API_UPDATE_BASE_URL: BACKEND_BASE_URL + "/api/v1/admins/clothes",
     API_UPDATE_OPTIONS: {
-      method: "POST",
+      method: "PATCH",
       credentials: "include",
     },
   },
@@ -90,15 +87,17 @@ const CALL_API_OBJ: CallApiObj = {
   },
 };
 
+// Firstly -> fetch cloth data. Secondly -> update cloth data
 export default function AdminUpdateCloth() {
   const { clothId } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
   const [previewFiles, setPreviewFiles] = useState<PreviewFile[]>([]);
   const [publicIds, setPublicIds] = useState<string[]>([]);
-  const [formData, setFormData] = useState<UpdateClothResponse["cloth"] | null>(
-    null
-  );
+  const allPublicIds = useRef<string[]>([]);
+  const [formData, setFormData] = useState<
+    UpdateClothResponse["cloth"] | undefined
+  >(undefined);
   const [errors, setErrors] = useState<FormErrors>({
     title: "",
     clothImages: "",
@@ -134,31 +133,54 @@ export default function AdminUpdateCloth() {
       hasErrors: false,
     });
 
-    // // check for validation errors
-    // const errors = validateCreateCloth(formData);
-    // if (errors.hasErrors) {
-    //   setErrors(errors);
-    //   setIsLoading(false);
-    //   return;
-    // }
+    // check for validation errors
+    if (formData && typeof formData === "object") {
+      // override publicIds property with publicIds state
+      formData.publicIds = allPublicIds.current.filter(
+        (p) => !publicIds.includes(p)
+      );
 
-    const fd = new FormData();
-    for (let key in formData) {
-      const value = formData[key as keyof FormData];
+      const { _id, images, createdAt, updatedAt, ...update } = formData;
 
-      if (Array.isArray(value)) {
-        // If the field is an array of files
-        value.forEach((v) => fd.append(key, v));
-      } else {
-        fd.append(key, value as string);
+      // check validation errors
+      const errors = validateUpdateCloth(update);
+      if (errors.hasErrors) {
+        setErrors(errors);
+        setIsLoading(false);
+        return;
       }
-    }
 
-    // call api
-    setCallApi({
-      url: CALL_API_OBJ.UPDATE.API_UPDATE_BASE_URL + `/${clothId}/update`,
-      options: { ...CALL_API_OBJ.UPDATE.API_UPDATE_OPTIONS, body: fd },
-    });
+      // create FormData type for submissions
+      const fd = new FormData();
+      for (let key in update) {
+        const value =
+          formData[
+            key as keyof (GetClothData & {
+              clothImages: File[];
+              publicIds: string[];
+            })
+          ];
+
+        if (Array.isArray(value)) {
+          // If the field is an array of files
+          value.forEach((v) => {
+            if (typeof v === "string") {
+              fd.append(key, v as string);
+            } else {
+              fd.append(key, v as File);
+            }
+          });
+        } else {
+          fd.append(key, value as string);
+        }
+      }
+
+      // call api
+      setCallApi({
+        url: CALL_API_OBJ.UPDATE.API_UPDATE_BASE_URL + `/${clothId}/update`,
+        options: { ...CALL_API_OBJ.UPDATE.API_UPDATE_OPTIONS, body: fd },
+      });
+    }
   };
 
   // handle input change
@@ -215,6 +237,7 @@ export default function AdminUpdateCloth() {
   // execute on api response
   useEffect(() => {
     if (data?.cloth) {
+      console.log("read");
       successNotification(data.message);
       setPreviewFiles(
         data.cloth.images.map((i) => ({
@@ -224,13 +247,25 @@ export default function AdminUpdateCloth() {
         }))
       );
       setPublicIds(data.cloth.images.map((i) => i.publicId));
-      setFormData({ ...data.cloth, clothImages: [] });
+      allPublicIds.current = data.cloth.images.map((i) => i.publicId);
+      setPreviewFiles(
+        data.cloth.images.map((i) => ({
+          name: i.publicId,
+          id: i.publicId,
+          url: i.url,
+        }))
+      );
+      setFormData({ ...data.cloth, clothImages: [], publicIds: [] });
+      return;
     }
     if (data) {
+      console.log("update");
       successNotification(data.message);
       navigate("/admins/clothes/view-all-clothes");
+      return;
     }
     if (error) {
+      console.log("error");
       errorNotification(error);
       // set states to intial values
       setCallApi({ url: "", options: {} });
@@ -248,6 +283,8 @@ export default function AdminUpdateCloth() {
   }, []);
 
   console.log(formData);
+  console.log(previewFiles);
+  console.log(publicIds);
 
   return (
     <div className="min-h-screen flex items-center justify-center color-base-100 color-base-content p-5">
@@ -294,7 +331,7 @@ export default function AdminUpdateCloth() {
                     name="title"
                     type="text"
                     placeholder="Classic White T-Shirt"
-                    value={formData?.title}
+                    value={formData ? formData.title : "Loading..."}
                     onChange={handleInputChange}
                     className="w-full pl-10 pr-3 py-2 solid-border rounded-md"
                   />
@@ -344,11 +381,15 @@ export default function AdminUpdateCloth() {
               </div>
 
               {/* preview files */}
-              {setFormData && typeof setFormData === "object" && (
+              {formData && typeof formData === "object" && (
                 <div className="space-y-2">
                   {previewFiles.map((f) => (
-                    <PreviewFormImages<PreviewFile[], FormData>
-                      set={{ setPreviewFiles, setFormData }}
+                    <PreviewFormImages<
+                      PreviewFile[],
+                      UpdateClothResponse["cloth"],
+                      string[]
+                    >
+                      set={{ setPreviewFiles, setFormData, setPublicIds }}
                       id={f.id}
                       name={f.name}
                       url={f.url}
@@ -357,7 +398,7 @@ export default function AdminUpdateCloth() {
                 </div>
               )}
 
-              {setFormData && typeof setFormData === "object" && (
+              {formData && typeof formData === "object" && (
                 <div className="space-y-2">
                   <label
                     htmlFor="category"
@@ -365,10 +406,11 @@ export default function AdminUpdateCloth() {
                   >
                     Category
                   </label>
-                  <Dropdown<FormData>
+                  <Dropdown<UpdateClothResponse["cloth"]>
                     set={{ setState: setFormData, name: "category" }}
                     options={CLOTH_CATEGORIES}
                     placeholder="---Categories---"
+                    selectedOption={formData.category}
                   />
                   {errors.category && (
                     <p
@@ -382,7 +424,7 @@ export default function AdminUpdateCloth() {
                 </div>
               )}
 
-              {setFormData && typeof setFormData === "object" && (
+              {formData && typeof formData === "object" && (
                 <div className="space-y-2">
                   <label
                     htmlFor="is-top-3"
@@ -390,10 +432,11 @@ export default function AdminUpdateCloth() {
                   >
                     Is this garment in the top three?
                   </label>
-                  <Dropdown<FormData>
+                  <Dropdown<UpdateClothResponse["cloth"]>
                     set={{ setState: setFormData, name: "isTop3" }}
                     options={TOP_3_CLOTHES}
                     placeholder="---Top 3---"
+                    selectedOption={`${formData.isTop3}`}
                   />
                   {errors.isTop3 && (
                     <p
@@ -422,7 +465,7 @@ export default function AdminUpdateCloth() {
                     name="actualPrice"
                     type="text"
                     placeholder="1299"
-                    value={formData?.actualPrice}
+                    value={formData ? formData.actualPrice : "Loading..."}
                     onChange={handleInputChange}
                     className="w-full pl-10 pr-3 py-2 solid-border rounded-md"
                   />
@@ -453,7 +496,7 @@ export default function AdminUpdateCloth() {
                     name="discountedPrice"
                     type="text"
                     placeholder="799"
-                    value={formData?.discountedPrice}
+                    value={formData ? formData.discountedPrice : "Loading..."}
                     onChange={handleInputChange}
                     className="w-full pl-10 pr-3 py-2 solid-border rounded-md"
                   />
@@ -481,15 +524,15 @@ export default function AdminUpdateCloth() {
                 {isLoading ? (
                   <div className="flex items-center justify-center">
                     <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    Creating...
+                    Updating...
                   </div>
                 ) : (
-                  "Create"
+                  "Updating"
                 )}
               </button>
 
               <p id="signin-button-description" className="sr-only">
-                Click to create new cloth
+                Click to update existing cloth
               </p>
             </div>
           </form>

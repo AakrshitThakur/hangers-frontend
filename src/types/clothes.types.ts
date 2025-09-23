@@ -20,10 +20,15 @@ interface GetAllClothesResponse {
   clothes: GetClothData[];
 }
 
+interface GetClothResponse {
+  message: string;
+  cloth: GetClothData;
+}
+
 // firstly - get the cloth data | lastly - update the cloth data
 interface UpdateClothResponse {
   message: string;
-  cloth?: GetClothData & { clothImages: File[] };
+  cloth?: GetClothData & { clothImages: File[] } & { publicIds: string[] };
 }
 
 interface CreateCloth {
@@ -35,9 +40,21 @@ interface CreateCloth {
   discountedPrice: string;
 }
 
+interface UpdateCloth {
+  title: string;
+  clothImages: File[];
+  publicIds: string[];
+  isTop3?: string;
+  category: string;
+  actualPrice: string;
+  discountedPrice: string;
+}
+
 export type {
   GetAllClothesResponse,
   GetClothData,
+  GetClothResponse,
   CreateCloth,
+  UpdateCloth,
   UpdateClothResponse,
 };

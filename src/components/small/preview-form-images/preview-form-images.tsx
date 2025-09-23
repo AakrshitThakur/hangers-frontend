@@ -1,17 +1,20 @@
 import { Trash2 } from "lucide-react";
 import type { SetStateAction } from "react";
 
-interface PreviewFormImagesProps<T1, T2> {
+interface PreviewFormImagesProps<T1, T2, T3> {
   id: string;
   name: string;
   url: string;
   set: {
     setPreviewFiles: React.Dispatch<SetStateAction<T1>>;
     setFormData: React.Dispatch<SetStateAction<T2>>;
+    setPublicIds?: React.Dispatch<SetStateAction<T3>>;
   };
 }
 
-function PreviewFormImages<T1, T2>(props: PreviewFormImagesProps<T1, T2>) {
+function PreviewFormImages<T1, T2, T3 = string[]>(
+  props: PreviewFormImagesProps<T1, T2, T3>
+) {
   // delete file from states
   function deleteFile() {
     props.set.setPreviewFiles((curr: T1) => {
@@ -31,6 +34,14 @@ function PreviewFormImages<T1, T2>(props: PreviewFormImagesProps<T1, T2>) {
       }
       return curr;
     });
+    // this set is called for updation operation
+    props.set.setPublicIds &&
+      props.set.setPublicIds((curr: T3) => {
+        if (Array.isArray(curr as T3)) {
+          return (curr as any).filter((p: string) => p !== props.id);
+        }
+        return curr;
+      });
   }
   return (
     <section
@@ -45,8 +56,11 @@ function PreviewFormImages<T1, T2>(props: PreviewFormImagesProps<T1, T2>) {
         />
         <p className="text-base">{props.name}</p>
       </div>
-      <span className="absolute top-1 right-1 cursor-pointer" onClick={deleteFile}>
-        <Trash2 strokeWidth={1.25} className="w-4 h-4 text-red-600"/>
+      <span
+        className="absolute top-1 right-1 cursor-pointer"
+        onClick={deleteFile}
+      >
+        <Trash2 strokeWidth={1.25} className="w-4 h-4 text-red-600" />
       </span>
     </section>
   );

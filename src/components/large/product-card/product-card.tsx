@@ -9,10 +9,10 @@ import {
   Trash2,
 } from "lucide-react";
 import FullViewportImage from "../full-viewport-image/full-viewport-image";
-import type { GetAllClothesData } from "../../../types/clothes.types";
+import type { GetClothData } from "../../../types/clothes.types";
 
 // handles both users and admins requests
-export default function ProductCard(props: GetAllClothesData) {
+export default function ProductCard(props: GetClothData) {
   // full view image state
   const [imageUrl, setImageUrl] = useState("");
 

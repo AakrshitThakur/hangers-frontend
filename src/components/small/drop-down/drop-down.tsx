@@ -16,10 +16,10 @@ interface DropdownProps<T> {
   };
   options: DropdownOption[];
   placeholder?: string;
+  selectedOption?: string;
 }
 
 export function Dropdown<T>(props: DropdownProps<T>) {
-
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<DropdownOption | null>(
     null
@@ -53,6 +53,13 @@ export function Dropdown<T>(props: DropdownProps<T>) {
     // call setter on a valid selected option value
     props.set.setState((curr) => ({ ...curr, [props.set.name]: value }));
   }
+
+  useEffect(() => {
+    if (props.selectedOption) {
+      const so = props.options.find((o) => o.value === props.selectedOption);
+      so && setSelectedOption(so);
+    }
+  }, []);
 
   return (
     <div ref={dropdownRef} className="relative inline-block">

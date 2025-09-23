@@ -8,6 +8,7 @@ import AdminSignOut from "../../pages/admin/signout";
 import AdminViewAllClothes from "../../pages/admin/view-all-clothes.admin";
 import AdminDeleteCloth from "../../pages/admin/delete-cloth";
 import AdminCreateCloth from "../../pages/admin/create-cloth";
+import AdminUpdateCloth from "../../pages/admin/update-cloth";
 import IsAdminAuthenticated from "../../wrappers/is-admin-authenticated";
 import "./App.css";
 
@@ -34,6 +35,14 @@ function App() {
             element={
               <IsAdminAuthenticated>
                 <AdminDeleteCloth />
+              </IsAdminAuthenticated>
+            }
+          />
+          <Route
+            path="/admins/clothes/:clothId/update"
+            element={
+              <IsAdminAuthenticated>
+                <AdminUpdateCloth />
               </IsAdminAuthenticated>
             }
           />

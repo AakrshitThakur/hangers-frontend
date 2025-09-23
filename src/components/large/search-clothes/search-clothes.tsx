@@ -6,6 +6,7 @@ import {
   SORT_CLOTHES,
   TOP_3_CLOTHES,
 } from "../../../constants/cloth.constants";
+import useDebounce from "../../../hooks/use-debounce";
 
 interface SearchClothesProps {
   setUrl: React.Dispatch<React.SetStateAction<string>>;
@@ -30,6 +31,8 @@ export default function SearchClothes(props: SearchClothesProps) {
     is_top_3: "",
   });
 
+  const debouncedSearch = useDebounce(searchParams.search, 500);
+
   // handle submit
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -39,15 +42,22 @@ export default function SearchClothes(props: SearchClothesProps) {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const target = e.target;
+    if (target.name === "search") {
+    }
     setSearchParams({ ...searchParams, [target.name]: target.value });
   }
 
   useEffect(() => {
     // set new params in url
-    const urlWithParams = `${URL}?search=${searchParams.search}&category=${searchParams.category}&sort=${searchParams.sort}&is_top_3=${searchParams.is_top_3}`;
+    const urlWithParams = `${URL}?search=${debouncedSearch}&category=${searchParams.category}&sort=${searchParams.sort}&is_top_3=${searchParams.is_top_3}`;
 
     props.setUrl(urlWithParams);
-  }, [searchParams]);
+  }, [
+    debouncedSearch,
+    searchParams.category,
+    searchParams.sort,
+    searchParams.is_top_3,
+  ]);
 
   return (
     <section
