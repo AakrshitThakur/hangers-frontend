@@ -10,10 +10,7 @@ import {
   errorNotification,
   successNotification,
 } from "../../utils/toast.utils";
-import {
-  validateCreateCloth,
-  validateUpdateCloth,
-} from "../../utils/validations/validation-cloth";
+import { validateUpdateCloth } from "../../utils/validations/validation-cloth";
 import { Dropdown } from "../../components/small/drop-down/drop-down";
 import { CLOTH_CATEGORIES } from "../../constants/cloth.constants";
 import useFetch from "../../hooks/use-fetch";
@@ -21,9 +18,7 @@ import PreviewFormImages from "../../components/small/preview-form-images/previe
 import type {
   UpdateClothResponse,
   GetClothData,
-  GetClothResponse,
 } from "../../types/clothes.types";
-import omit from "../../utils/omit";
 
 // all interfaces
 interface FormErrors {
@@ -259,13 +254,11 @@ export default function AdminUpdateCloth() {
       return;
     }
     if (data) {
-      console.log("update");
       successNotification(data.message);
       navigate("/admins/clothes/view-all-clothes");
       return;
     }
     if (error) {
-      console.log("error");
       errorNotification(error);
       // set states to intial values
       setCallApi({ url: "", options: {} });
@@ -281,10 +274,6 @@ export default function AdminUpdateCloth() {
       options: { ...CALL_API_OBJ.READ.API_READ_OPTIONS },
     });
   }, []);
-
-  console.log(formData);
-  console.log(previewFiles);
-  console.log(publicIds);
 
   return (
     <div className="min-h-screen flex items-center justify-center color-base-100 color-base-content p-5">

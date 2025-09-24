@@ -1,4 +1,5 @@
 import { Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
@@ -21,15 +22,15 @@ export default function Hero() {
         </a>
         {/* Desktop CTA Buttons */}
         <div>
-          <a href="/view-all-clothes">
+          <Link to="/view-all-clothes">
             <button className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content px-3 py-2 cursor-pointer">
               Browse Collections
             </button>
-          </a>
+          </Link>
         </div>
       </div>
       {/* mobile-hero */}
-      <div className="md:hidden absolute inset-0 bg-[rgba(0,0,0,0.75)] flex flex-col justify-center gap-2">
+      <div className="md:hidden absolute inset-0 bg-[rgba(0,0,0,0.85)] flex flex-col justify-center gap-2">
         <h1 className="text-3xl font-bold text-center">
           From Casual Classics to Timeless <br /> Ethnic Elegance
         </h1>
@@ -44,11 +45,11 @@ export default function Hero() {
           <Phone strokeWidth={1.25} className="inline h-auto w-4" />
         </a>
         {/* Desktop CTA Buttons */}
-        <div className="text-center">
-          <button className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content px-3 py-2">
+        <Link to="/view-all-clothes" className="text-center">
+          <button className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content cursor-pointer px-3 py-2">
             Browse Collections
           </button>
-        </div>
+        </Link>
       </div>
     </section>
   );

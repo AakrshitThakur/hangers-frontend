@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Shirt, Plus } from "lucide-react";
 import SearchClothes from "../../components/large/search-clothes/search-clothes";
 import type { GetAllClothesResponse } from "../../types/clothes.types";
 import useFetch from "../../hooks/use-fetch";
 import ProductCard from "../../components/large/product-card/product-card";
 import SkeletonLoader from "../../components/small/skeleton/skeleton";
+import { errorNotification } from "../../utils/toast.utils";
 
 const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
@@ -24,6 +25,10 @@ export default function AdminViewAllClothes() {
     url,
     options: OPTIONS,
   });
+
+    useEffect(() => {
+    if (error) errorNotification(error);
+  }, [error]);
 
   return (
     <div id="admin-view-all-clothes" className="min-h-[85vh]">

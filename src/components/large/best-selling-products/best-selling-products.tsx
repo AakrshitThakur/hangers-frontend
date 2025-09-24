@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import useFetch from "../../../hooks/use-fetch";
 import type { GetAllClothesResponse } from "../../../types/clothes.types";
 import SkeletonLoader from "../../small/skeleton/skeleton";
 import ProductCard from "../product-card/product-card";
+import { errorNotification } from "../../../utils/toast.utils";
 
 const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
@@ -19,6 +21,10 @@ export default function BestSellingProducts() {
     url: URL,
     options: OPTIONS,
   });
+
+  useEffect(() => {
+    if (error) errorNotification(error);
+  }, [error]);
 
   return (
     <section

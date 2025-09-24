@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Shirt } from "lucide-react";
 import SearchClothes from "../components/large/search-clothes/search-clothes";
 import type { GetAllClothesResponse } from "../types/clothes.types";
 import useFetch from "../hooks/use-fetch";
 import ProductCard from "../components/large/product-card/product-card";
 import SkeletonLoader from "../components/small/skeleton/skeleton";
+import { errorNotification } from "../utils/toast.utils";
 
 const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
@@ -25,12 +26,14 @@ export default function ViewAllClothes() {
     options: OPTIONS,
   });
 
-  console.log(data?.clothes);
+  useEffect(() => {
+    if (error) errorNotification(error);
+  }, [error]);
 
   return (
     <div id="view-all-clothes" className="min-h-[85vh]">
       <div className="color-accent color-base-accent p-10 flex flex-col justify-start gap-5 items-center mb-1">
-        <h1 className="text-center font-semibold text-2xl sm:text-3xl md:text-3xl leading-normal">
+        <h1 className="text-center font-semibold text-2xl sm:text-3xl md:text-3xl leading-0.25">
           Discover the Elegance of Hangers Apparel
           <span className="inline-block relative ml-1.5 -bottom-3 w-12 h-12 aspect-square">
             <img className="object-fill" src="/images/hi.png" alt="" />
