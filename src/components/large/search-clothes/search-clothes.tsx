@@ -42,8 +42,6 @@ export default function SearchClothes(props: SearchClothesProps) {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const target = e.target;
-    if (target.name === "search") {
-    }
     setSearchParams({ ...searchParams, [target.name]: target.value });
   }
 

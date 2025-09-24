@@ -111,7 +111,7 @@ export default function AdminCreateCloth() {
     }
 
     const fd = new FormData();
-    for (let key in formData) {
+    for (const key in formData) {
       const value = formData[key as keyof FormData];
 
       if (Array.isArray(value)) {

@@ -18,6 +18,8 @@ import PreviewFormImages from "../../components/small/preview-form-images/previe
 import type {
   UpdateClothResponse,
   GetClothData,
+  GetUpdateCloth,
+  UpdateCloth,
 } from "../../types/clothes.types";
 
 // all interfaces
@@ -81,6 +83,19 @@ const CALL_API_OBJ: CallApiObj = {
     },
   },
 };
+const setInitialFormData: GetUpdateCloth = {
+  _id: "",
+  title: "",
+  isTop3: "",
+  images: [],
+  category: "",
+  actualPrice: "",
+  discountedPrice: "",
+  createdAt: "",
+  updatedAt: "",
+  publicIds: [],
+  clothImages: [],
+};
 
 // Firstly -> fetch cloth data. Secondly -> update cloth data
 export default function AdminUpdateCloth() {
@@ -90,9 +105,7 @@ export default function AdminUpdateCloth() {
   const [previewFiles, setPreviewFiles] = useState<PreviewFile[]>([]);
   const [publicIds, setPublicIds] = useState<string[]>([]);
   const allPublicIds = useRef<string[]>([]);
-  const [formData, setFormData] = useState<
-    UpdateClothResponse["cloth"] | undefined
-  >(undefined);
+  const [formData, setFormData] = useState<GetUpdateCloth>(setInitialFormData);
   const [errors, setErrors] = useState<FormErrors>({
     title: "",
     clothImages: "",
@@ -135,7 +148,14 @@ export default function AdminUpdateCloth() {
         (p) => !publicIds.includes(p)
       );
 
-      const { _id, images, createdAt, updatedAt, ...update } = formData;
+      /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+      const {
+        _id: _,
+        images: __,
+        createdAt: ___,
+        updatedAt: ____,
+        ...update
+      } = formData;
 
       // check validation errors
       const errors = validateUpdateCloth(update);
@@ -147,7 +167,7 @@ export default function AdminUpdateCloth() {
 
       // create FormData type for submissions
       const fd = new FormData();
-      for (let key in update) {
+      for (const key in update) {
         const value =
           formData[
             key as keyof (GetClothData & {
@@ -373,11 +393,7 @@ export default function AdminUpdateCloth() {
               {formData && typeof formData === "object" && (
                 <div className="space-y-2">
                   {previewFiles.map((f) => (
-                    <PreviewFormImages<
-                      PreviewFile[],
-                      UpdateClothResponse["cloth"],
-                      string[]
-                    >
+                    <PreviewFormImages<PreviewFile[], GetUpdateCloth>
                       set={{ setPreviewFiles, setFormData, setPublicIds }}
                       id={f.id}
                       name={f.name}
@@ -395,7 +411,7 @@ export default function AdminUpdateCloth() {
                   >
                     Category
                   </label>
-                  <Dropdown<UpdateClothResponse["cloth"]>
+                  <Dropdown<GetUpdateCloth>
                     set={{ setState: setFormData, name: "category" }}
                     options={CLOTH_CATEGORIES}
                     placeholder="---Categories---"
@@ -421,7 +437,7 @@ export default function AdminUpdateCloth() {
                   >
                     Is this garment in the top three?
                   </label>
-                  <Dropdown<UpdateClothResponse["cloth"]>
+                  <Dropdown<GetUpdateCloth>
                     set={{ setState: setFormData, name: "isTop3" }}
                     options={TOP_3_CLOTHES}
                     placeholder="---Top 3---"

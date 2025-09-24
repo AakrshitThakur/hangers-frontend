@@ -57,7 +57,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
   useEffect(() => {
     if (props.selectedOption) {
       const so = props.options.find((o) => o.value === props.selectedOption);
-      so && setSelectedOption(so);
+      if (so) setSelectedOption(so);
     }
   }, []);
 

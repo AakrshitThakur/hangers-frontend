@@ -31,6 +31,8 @@ interface UpdateClothResponse {
   cloth?: GetClothData & { clothImages: File[] } & { publicIds: string[] };
 }
 
+type GetUpdateCloth = GetClothData & { clothImages: File[] } & { publicIds: string[] };
+
 interface CreateCloth {
   title: string;
   clothImages: File[];
@@ -57,4 +59,5 @@ export type {
   CreateCloth,
   UpdateCloth,
   UpdateClothResponse,
+  GetUpdateCloth,
 };

@@ -1,47 +1,56 @@
 import { Trash2 } from "lucide-react";
 import type { SetStateAction } from "react";
 
-interface PreviewFormImagesProps<T1, T2, T3> {
+interface PreviewFile {
+  id: string;
+  name: string;
+  url: string;
+}
+interface PreviewFormImagesProps<T1, T2 extends { clothImages?: File[] }> {
   id: string;
   name: string;
   url: string;
   set: {
     setPreviewFiles: React.Dispatch<SetStateAction<T1>>;
     setFormData: React.Dispatch<SetStateAction<T2>>;
-    setPublicIds?: React.Dispatch<SetStateAction<T3>>;
+    setPublicIds?: React.Dispatch<SetStateAction<string[]>>;
   };
 }
 
-function PreviewFormImages<T1, T2, T3 = string[]>(
-  props: PreviewFormImagesProps<T1, T2, T3>
+function PreviewFormImages<T1, T2 extends { clothImages?: File[] }>(
+  props: PreviewFormImagesProps<T1, T2>
 ) {
   // delete file from states
   function deleteFile() {
     props.set.setPreviewFiles((curr: T1) => {
       if (Array.isArray(curr)) {
-        return curr.filter((f) => props.id !== f.id) as T1;
+        return curr.filter(
+          (f: PreviewFile) => props.id !== (f.id as string)
+        ) as T1;
       }
       return curr;
     });
-    props.set.setFormData((curr: T2) => {
-      if (Array.isArray((curr as any).clothImages)) {
+    // filter files of the field: clotheImages
+    props.set.setFormData((curr) => {
+      if (curr && typeof curr === "object" && Array.isArray(curr.clothImages)) {
         return {
           ...curr,
-          clothImages: (curr as any).clothImages.filter(
-            (f: any) => f.lastModified.toString() !== props.id
-          ) as T2,
+          clothImages: curr.clothImages.filter(
+            (f) => f.lastModified.toString() !== props.id
+          ),
         };
       }
       return curr;
     });
     // this set is called for updation operation
-    props.set.setPublicIds &&
-      props.set.setPublicIds((curr: T3) => {
-        if (Array.isArray(curr as T3)) {
-          return (curr as any).filter((p: string) => p !== props.id);
+    if (props.set.setPublicIds) {
+      props.set.setPublicIds((curr) => {
+        if (Array.isArray(curr)) {
+          return curr.filter((p: string) => p !== props.id);
         }
         return curr;
       });
+    }
   }
   return (
     <section
