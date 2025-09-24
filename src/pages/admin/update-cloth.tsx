@@ -19,7 +19,6 @@ import type {
   UpdateClothResponse,
   GetClothData,
   GetUpdateCloth,
-  UpdateCloth,
 } from "../../types/clothes.types";
 
 // all interfaces
