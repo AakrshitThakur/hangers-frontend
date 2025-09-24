@@ -10,7 +10,7 @@ import AdminDeleteCloth from "../../pages/admin/delete-cloth";
 import AdminCreateCloth from "../../pages/admin/create-cloth";
 import AdminUpdateCloth from "../../pages/admin/update-cloth";
 import IsAdminAuthenticated from "../../wrappers/is-admin-authenticated";
-import "./App.css";
+import "./app.css";
 
 function App() {
   return (
