@@ -15,8 +15,8 @@ import "./app.css";
 function App() {
   return (
     <div id="app">
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/view-all-clothes" element={<ViewAllClothes />} />
@@ -56,8 +56,8 @@ function App() {
           />
           <Route path="*" element={<LandingPage />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
-      <Footer />
     </div>
   );
 }

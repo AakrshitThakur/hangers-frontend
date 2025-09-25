@@ -16,8 +16,8 @@ export default function Hero() {
           ~ Shop No. 1, Near Taxi Stand, Railway Road, Una - 174315{" "}
           <MapPin strokeWidth={1.25} className="inline h-auto w-4" />
         </address>
-        <a className="inline text-base text-center" href="tel:+917876746149">
-          ~ (+91) 7876746149{" "}
+        <a className="inline text-base text-center" href="tel:+917018904318">
+          ~ (+91) 7018904318{" "}
           <Phone strokeWidth={1.25} className="inline h-auto w-4" />
         </a>
         {/* Desktop CTA Buttons */}
@@ -40,11 +40,11 @@ export default function Hero() {
             <MapPin strokeWidth={1.25} className="inline h-auto w-4" />
           </span>
         </address>
-        <a className="inline text-base text-center" href="tel:+917876746149">
-          ~ (+91) 7876746149{" "}
+        <a className="inline text-base text-center" href="tel:+917018904318">
+          ~ (+91) 7018904318{" "}
           <Phone strokeWidth={1.25} className="inline h-auto w-4" />
         </a>
-        {/* Desktop CTA Buttons */}
+        {/* Mobile CTA Buttons */}
         <Link to="/view-all-clothes" className="text-center">
           <button className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content cursor-pointer px-3 py-2">
             Browse Collections

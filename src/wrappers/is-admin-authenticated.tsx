@@ -17,7 +17,6 @@ const OPTIONS: RequestInit = {
 };
 
 export default function IsAdminAuthenticated(props: { children: ReactNode }) {
-  console.log(URL);
   const navigate = useNavigate();
 
   // custom use-fetch hook

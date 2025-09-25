@@ -42,7 +42,9 @@ function useFetch<T>(props: InputFetch): ResponseFetch<T> {
         setStates({ data: json, error: null, loading: false });
       }
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        console.error(error.message);
+      } else if (error instanceof Error) {
         console.error(error.message);
         setStates({ data: null, error: error.message, loading: false });
       } else {

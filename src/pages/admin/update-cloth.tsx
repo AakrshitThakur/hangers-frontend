@@ -251,7 +251,6 @@ export default function AdminUpdateCloth() {
   // execute on api response
   useEffect(() => {
     if (data?.cloth) {
-      console.log("read");
       successNotification(data.message);
       setPreviewFiles(
         data.cloth.images.map((i) => ({

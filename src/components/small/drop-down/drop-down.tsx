@@ -59,7 +59,7 @@ export function Dropdown<T>(props: DropdownProps<T>) {
       const so = props.options.find((o) => o.value === props.selectedOption);
       if (so) setSelectedOption(so);
     }
-  }, []);
+  }, [props.selectedOption]);
 
   return (
     <div ref={dropdownRef} className="relative inline-block">

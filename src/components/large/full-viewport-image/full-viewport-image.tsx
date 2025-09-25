@@ -16,7 +16,7 @@ export default function FullViewportImage(props: FullViewportImageProps) {
     >
       <X
         strokeWidth={1.25}
-        className="color-base-content absolute top-0 right-0 h-11 w-11 cursor-pointer"
+        className="color-base-content absolute top-0 right-0 z-50 h-11 w-11 cursor-pointer"
         onClick={() => props.setImageUrl("")}
       />
       <div className="absolute max-h-screen h-[95vh] aspect-[9/12]">
