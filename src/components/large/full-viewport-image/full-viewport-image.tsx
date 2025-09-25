@@ -19,7 +19,7 @@ export default function FullViewportImage(props: FullViewportImageProps) {
         className="color-base-content absolute top-0 right-0 z-50 h-11 w-11 cursor-pointer"
         onClick={() => props.setImageUrl("")}
       />
-      <div className="absolute max-h-screen h-[95vh] aspect-[9/12]">
+      <div className="absolute max-h-screen h-[75vh] sm:h-[85vh] md:h-[95vh] aspect-[9/12]">
         <img
           src={props.imageUrl}
           className="w-full h-full bg-center bg-no-repeat"

@@ -52,7 +52,7 @@ export default function AdminViewAllClothes() {
         className="relative color-base-100 color-base-content grid grid-cols-[repeat(auto-fit,minmax(200px,250px))] justify-center gap-1 p-10"
       >
         {/* add new cloth */}
-        <a href="/admins/clothes/create" className="absolute top-1 right-1 color-success color-success-content w-9 h-9 rounded-full cursor-pointer">
+        <a href="/admins/clothes/create" className="absolute top-2 right-2 color-success color-success-content w-9 h-9 rounded-full cursor-pointer">
           <Plus className="w-full h-full rounded-full" strokeWidth={1.25} />
         </a>
         {/* <a href="/admins/clothes/create" className="absolute color-success top-1 right-1 w-11 h-11 solid-border rounded-full cursor-pointer p-[0.15rem]">
