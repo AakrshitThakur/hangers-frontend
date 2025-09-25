@@ -75,7 +75,7 @@ export function Navbar() {
             >
               <Youtube strokeWidth={1.25} />
             </Link>
-            <Link to="">
+            <Link to="/">
               <Instagram strokeWidth={1.25} />
             </Link>
             <StaticDropDown {...adminDropDown} />
@@ -143,7 +143,7 @@ export function Navbar() {
                   >
                     <Youtube strokeWidth={1.25} />
                   </Link>
-                  <Link to="">
+                  <Link to="/">
                     <Instagram strokeWidth={1.25} />
                   </Link>
                 </div>
