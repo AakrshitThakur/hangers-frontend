@@ -33,7 +33,7 @@ export function Navbar() {
   return (
     <nav
       id="navbar"
-      className="sticky top-0 z-50 w-full color-base-300 color-base-content"
+      className="sticky top-0 z-50 w-full max-w-7xl color-base-300 color-base-content"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">

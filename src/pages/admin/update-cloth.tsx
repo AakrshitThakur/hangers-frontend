@@ -294,7 +294,7 @@ export default function AdminUpdateCloth() {
   }, []);
 
   return (
-    <div className="min-h-[65vh] sm:min-h-[75vh] md:min-h-[85vh] flex items-center justify-center color-base-100 color-base-content p-5">
+    <div className="min-h-[65vh] sm:min-h-[75vh] md:min-h-[85vh] w-full max-w-7xl flex items-center justify-center color-base-100 color-base-content p-5">
       <div className="color-base-300 color-base-content w-full max-w-md space-y-8 p-3 rounded-2xl">
         {/* Header */}
         <div className="text-center space-y-1">

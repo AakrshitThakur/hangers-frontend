@@ -31,15 +31,9 @@ export default function AdminViewAllClothes() {
   }, [error]);
 
   return (
-    <div id="admin-view-all-clothes" className="min-h-[85vh]">
+    <div id="admin-view-all-clothes" className="min-h-[85vh] w-full max-w-7xl">
       <div className="color-accent color-base-accent p-10 flex flex-col justify-start gap-5 items-center mb-1">
         <h1 className="flex justify-center items-center gap-1 text-center font-semibold text-2xl sm:text-3xl md:text-3xl">
-          {/* <span className="inline-flex justify-center items-center color-warning color-warning-content w-11 h-11 rounded-full">
-          <UserStar
-            className="inline-block w-7 h-7"
-            strokeWidth={1.25}
-          />
-          </span> */}
           <span className="inline-block w-12 h-12 aspect-square">
             <img className="object-fill" src="/images/hi.png" alt="" />
           </span>

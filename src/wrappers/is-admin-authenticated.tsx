@@ -38,7 +38,7 @@ export default function IsAdminAuthenticated(props: { children: ReactNode }) {
       {!loading && data ? (
         props.children
       ) : (
-        <section className="min-h-[85vh] flex flex-col items-center justify-center color-base-100 color-base-content gap-5 p-5">
+        <section className="min-h-[85vh] w-full max-w-7xl flex flex-col items-center justify-center color-base-100 color-base-content gap-5 p-5">
           <span className="loader"></span>
         </section>
       )}

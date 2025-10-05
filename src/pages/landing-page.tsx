@@ -4,7 +4,7 @@ import BestSellingProducts from "../components/large/best-selling-products/best-
 export default function LandingPage() {
   return (
     <div
-      id="landing-page"
+      id="landing-page" className="w-full max-w-7xl"
     >
       <Hero />
       <BestSellingProducts />
