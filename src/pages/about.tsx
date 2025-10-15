@@ -6,12 +6,12 @@ export default function About() {
     >
       <div className="flex flex-col md:flex-row justify-center items-center gap-3">
         <div>
-          <p className="text-lg sm:text-xl md:text-2xl text-center md:text-left">
+          <p className="text-base sm:text-lg md:text-xl text-center md:text-left">
             Find Formal and Informal Wear for Every Style <br />— From Casual to
             Classic
           </p>
         </div>
-        <div className="w-xs sm:w-sm md:w-sm h-auto rounded-full solid-border">
+        <div className="w-xs sm:w-sm md:w-sm h-auto rounded-full overflow-hidden solid-border">
           <img
             src="/images/about-lehenga.png"
             alt="Lehenga image"
@@ -29,8 +29,8 @@ export default function About() {
           />
         </div>
         <div>
-          <p className="text-lg sm:text-xl md:text-2xl text-center md:text-left">
-            A software developer proficient in software development.Demonstrated ability to build and maintain full-lifecycle web applications, backed by strong academic achievements.
+          <p className="text-base sm:text-lg md:text-xl text-center md:text-left">
+            A software developer proficient in software development. Demonstrated ability to build and maintain full-lifecycle web applications, backed by strong academic achievements. <br />— Software Developer
           </p>
         </div>
       </div>
