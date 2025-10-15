@@ -2,8 +2,8 @@ import { Heart, Instagram, Youtube, Github } from "lucide-react";
 
 export default function Footer() {
   const navigationLinks = [
-    { name: "Home", href: "#" },
-    { name: "About", href: "#" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
     { name: "Contact", href: "#" },
   ];
 

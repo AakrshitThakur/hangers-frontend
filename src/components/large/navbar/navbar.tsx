@@ -6,7 +6,7 @@ import StaticDropDown from "../../small/static-drop-down/static-drop-down";
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/" },
+  { name: "About", href: "/about" },
   { name: "Contact", href: "/" },
 ];
 
