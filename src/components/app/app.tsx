@@ -4,6 +4,7 @@ import Footer from "../large/footer/footer";
 import LandingPage from "../../pages/landing-page";
 import ViewAllClothes from "../../pages/view-all-clothes";
 import About from "../../pages/about";
+import Cart from "../../pages/cart";
 import AdminSignIn from "../../pages/admin/signin";
 import AdminSignOut from "../../pages/admin/signout";
 import AdminViewAllClothes from "../../pages/admin/view-all-clothes.admin";
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/view-all-clothes" element={<ViewAllClothes />} />
           <Route path="/about" element={<About />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/admins/signin" element={<AdminSignIn />} />
           <Route path="/admins/signout" element={<AdminSignOut />} />
           <Route

@@ -4,6 +4,13 @@ import { Expand, Flame, ChevronLeft, ChevronRight, Pen, Trash2, Plus, Minus } fr
 import FullViewportImage from "../full-viewport-image/full-viewport-image";
 import type { GetClothData } from "../../../types/clothes.types";
 
+function setProductQuantityInitialValue(_id: string): number {
+  const cart = localStorage.getItem(_id);
+  if (!cart) return 0;
+  const cartObj = JSON.parse(cart);
+  return cartObj.quantity;
+}
+
 // handles both users and admins requests
 export default function ProductCard(props: GetClothData) {
   // full view image state
@@ -12,7 +19,40 @@ export default function ProductCard(props: GetClothData) {
   // current image index
   const [currImageIndex, setCurrImageIndex] = useState(0);
 
-  const [count_product, set_count_product] = useState(0);
+  const [productQuantity, setProductQuantity] = useState(setProductQuantityInitialValue(props._id));
+
+  // useEffect(() => {
+  //   const cart = localStorage.getItem(props._id);
+  //   if (!cart && productQuantity === 0) return;
+  //   // create a fresh new cart item
+  //   if (!cart) {
+  //     const cartJson = JSON.stringify({ title: props.title, price: props.actualPrice, quantity: productQuantity });
+  //     localStorage.setItem(props._id, cartJson);
+  //     return;
+  //   }
+  //   const cartObj = JSON.parse(cart);
+  //   cartObj.quantity = productQuantity;
+  //   const cartJson = JSON.stringify(cartObj);
+  //   localStorage.setItem(props._id, cartJson);
+  // }, [productQuantity]);
+
+  function addToCart(_id: string, title: string, price: string) {
+    // validate input
+    if (!_id || !title || !price) return;
+
+    const cart = localStorage.getItem("hangers-shopping-cart");
+
+    const cartObj = !cart && typeof cart === "object" ? {} : JSON.parse(cart);
+    if (!cartObj._id && productQuantity === 0) return;
+
+    // create a fresh new cart item
+    if (!cartObj[_id]) cartObj[_id] = { title, price, quantity: productQuantity };
+    else {
+      const cartItem = cartObj[_id];
+      cartItem.quantity = productQuantity;
+    }
+    localStorage.setItem("hangers-shopping-cart", JSON.stringify(cartObj));
+  }
 
   // next image
   const setToNext = () => {
@@ -111,21 +151,24 @@ export default function ProductCard(props: GetClothData) {
           <div className="flex items-center gap-1">
             <span
               className="color-base-100 color-base-content inline-block w-5 h-5 rounded-full overflow-hidden cursor-pointer border p-0.5"
-              onClick={() => set_count_product((curr) => (curr === 5 ? 5 : curr + 1))}
+              onClick={() => setProductQuantity((curr) => (curr === 5 ? 5 : curr + 1))}
             >
               <Plus strokeWidth={1.25} className="w-full h-full" />
             </span>
             <span className="color-base-100 color-base-content flex justify-center items-center text-base rounded-md border w-7 h-7">
-              {count_product}
+              {productQuantity}
             </span>
             <span
               className="color-base-100 color-base-content inline-block w-5 h-5 rounded-full overflow-hidden cursor-pointer border p-0.5"
-              onClick={() => set_count_product((curr) => (curr <= 0 ? 0 : curr - 1))}
+              onClick={() => setProductQuantity((curr) => (curr <= 0 ? 0 : curr - 1))}
             >
               <Minus strokeWidth={1.25} className="w-full h-full" />
             </span>
           </div>
-          <button className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content px-2 py-1 leading-tight cursor-pointer">
+          <button
+            className="inline-flex items-center justify-center rounded-md color-secondary color-secondary-content px-2 py-1 leading-tight cursor-pointer"
+            onClick={() => addToCart(props._id, props.title, props.actualPrice)}
+          >
             Add to cart
           </button>
         </div>
