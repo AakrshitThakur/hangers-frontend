@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { Dropdown } from "../../small/drop-down/drop-down";
-import {
-  CLOTH_CATEGORIES,
-  SORT_CLOTHES,
-  TOP_3_CLOTHES,
-} from "../../../constants/cloth.constants";
+import { CLOTH_CATEGORIES, SORT_CLOTHES, TOP_3_CLOTHES } from "../../../constants/cloth.constants";
 import useDebounce from "../../../hooks/use-debounce";
 
 interface SearchClothesProps {
@@ -38,9 +34,7 @@ export default function SearchClothes(props: SearchClothesProps) {
     e.preventDefault();
   }
   // handle change
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const target = e.target;
     setSearchParams({ ...searchParams, [target.name]: target.value });
   }
@@ -50,22 +44,14 @@ export default function SearchClothes(props: SearchClothesProps) {
     const urlWithParams = `${URL}?search=${debouncedSearch}&category=${searchParams.category}&sort=${searchParams.sort}&is_top_3=${searchParams.is_top_3}`;
 
     props.setUrl(urlWithParams);
-  }, [
-    debouncedSearch,
-    searchParams.category,
-    searchParams.sort,
-    searchParams.is_top_3,
-  ]);
+  }, [debouncedSearch, searchParams.category, searchParams.sort, searchParams.is_top_3]);
 
   return (
     <section
       id="view-all-clothes"
       className="color-accent color-base-accent w-full flex flex-col justify-center items-center"
     >
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col justify-center items-center gap-3 w-full max-w-2xl"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-3 w-full max-w-2xl">
         <div className="color-base-200 color-base-content solid-border relative flex items-center w-full rounded-full">
           {/* Search Icon */}
           <div className="absolute left-3 flex items-center">

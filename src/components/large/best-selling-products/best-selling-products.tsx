@@ -27,19 +27,15 @@ export default function BestSellingProducts() {
   }, [error]);
 
   return (
-    <section
-      id="best-selling-products"
-      className="color-base-100 color-base-content py-7 max-w-7xl"
-    >
-      <h2 className="text-xl sm:text-2xl md:text-3xl text-center">
-        Our best selling products
-      </h2>
+    <section id="best-selling-products" className="color-base-100 color-base-content py-7 max-w-7xl">
+      <h2 className="text-xl sm:text-2xl md:text-3xl text-center">Our best selling products</h2>
       <p className="text-center text-sm">Don't Miss Out</p>
       {!loading && data ? (
         // auto-fit → The grid will create as many columns as can fit into the container’s width
         <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,250px))] justify-center gap-1 p-10">
           {data.clothes.map((cloth) => (
             <ProductCard
+              key={cloth._id}
               _id={cloth._id}
               title={cloth.title}
               category={cloth.category}

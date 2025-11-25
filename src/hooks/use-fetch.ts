@@ -23,7 +23,7 @@ function useFetch<T>(props: InputFetch): ResponseFetch<T> {
     // cancel previous working api
     controllerRef.current?.abort();
 
-    // creaet new abort controller for new api
+    // create new abort controller for new api
     controllerRef.current = new AbortController();
 
     try {

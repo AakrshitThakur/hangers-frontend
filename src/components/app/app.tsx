@@ -15,7 +15,7 @@ import "./app.css";
 
 function App() {
   return (
-    <div id="app">
+    <div id="app" className="w-full max-w-7xl">
       <BrowserRouter>
         <Navbar />
         <Routes>

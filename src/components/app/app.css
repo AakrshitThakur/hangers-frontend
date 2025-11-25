@@ -31,6 +31,10 @@
   --depth: 0;
   --noise: 0;
   --hover-bg: rgba(0, 0, 0, 0.1);
+
+  /* override default toast variables */
+  --toastify-toast-padding: 0.5rem;
+  --toastify-toast-min-height: auto;
 }
 
 .dark-mode {
@@ -200,4 +204,14 @@ html {
 ::-webkit-scrollbar-thumb {
   background: oklch(62.675% 0.00007 271.152); /* Dark gray thumb color */
   border-radius: 5px; /* Rounded corners for the thumb */
+}
+
+/* override default toast mobile behaviour */
+@media only screen and (max-width: 480px) {
+  .Toastify__toast-container .Toastify__toast {
+    --toastify-toast-width: 50% !important;
+    --toastify-toast-padding: 0.5rem !important;
+    border-radius: 6px !important;
+    margin-top: 0.5rem;
+  }
 }

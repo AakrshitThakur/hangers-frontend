@@ -2,14 +2,8 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Shield, AlertCircle, Type, Image, IndianRupee } from "lucide-react";
-import {
-  CLOTH_MIME_TYPES,
-  TOP_3_CLOTHES,
-} from "../../constants/cloth.constants";
-import {
-  errorNotification,
-  successNotification,
-} from "../../utils/toast.utils";
+import { CLOTH_MIME_TYPES, TOP_3_CLOTHES } from "../../constants/cloth.constants";
+import { errorNotification, successNotification } from "../../utils/toast.utils";
 import { validateCreateCloth } from "../../utils/validations/validation-cloth";
 import { Dropdown } from "../../components/small/drop-down/drop-down";
 import { CLOTH_CATEGORIES } from "../../constants/cloth.constants";
@@ -136,9 +130,7 @@ export default function AdminCreateCloth() {
       const file = target.files[0];
       // MIME file type check
       if (!CLOTH_MIME_TYPES.includes(file.type)) {
-        errorNotification(
-          "Kindly provide a file in a valid format (.png, .jpg, or .jpeg)"
-        );
+        errorNotification("Kindly provide a file in a valid format (.png, .jpg, or .jpeg)");
         return;
       }
       if (file.size > 5 * 1024 * 1024) {
@@ -205,9 +197,7 @@ export default function AdminCreateCloth() {
           {/* Card Header */}
           <div className="px-6 py-3">
             <h2 className="text-2xl font-semibold text-center mb-1">Sign In</h2>
-            <p className="text-base text-center">
-              Enter your credentials to access the admin panel
-            </p>
+            <p className="text-base text-center">Enter your credentials to access the admin panel</p>
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -238,11 +228,7 @@ export default function AdminCreateCloth() {
                   />
                 </div>
                 {errors.title && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
+                  <p id="title-error" className="text-xs text-red-600" role="alert">
                     {errors.title}
                   </p>
                 )}
@@ -271,11 +257,7 @@ export default function AdminCreateCloth() {
                   <p className="text-base">Upload File</p>
                 </div>
                 {errors.clothImages && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
+                  <p id="title-error" className="text-xs text-red-600" role="alert">
                     {errors.title}
                   </p>
                 )}
@@ -303,11 +285,7 @@ export default function AdminCreateCloth() {
                   placeholder="---Categories---"
                 />
                 {errors.category && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
+                  <p id="title-error" className="text-xs text-red-600" role="alert">
                     {errors.category}
                   </p>
                 )}
@@ -323,11 +301,7 @@ export default function AdminCreateCloth() {
                   placeholder="---Top 3---"
                 />
                 {errors.isTop3 && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
+                  <p id="title-error" className="text-xs text-red-600" role="alert">
                     {errors.isTop3}
                   </p>
                 )}
@@ -335,10 +309,7 @@ export default function AdminCreateCloth() {
 
               {/* Actual price field */}
               <div className="space-y-2">
-                <label
-                  htmlFor="actual-price"
-                  className="block text-sm font-medium"
-                >
+                <label htmlFor="actual-price" className="block text-sm font-medium">
                   Actual Price
                 </label>
                 <div className="relative text-base">
@@ -354,11 +325,7 @@ export default function AdminCreateCloth() {
                   />
                 </div>
                 {errors.actualPrice && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
+                  <p id="title-error" className="text-xs text-red-600" role="alert">
                     {errors.actualPrice}
                   </p>
                 )}
@@ -366,10 +333,7 @@ export default function AdminCreateCloth() {
 
               {/* Discounted price field */}
               <div className="space-y-2">
-                <label
-                  htmlFor="discounted-price"
-                  className="block text-sm font-medium"
-                >
+                <label htmlFor="discounted-price" className="block text-sm font-medium">
                   Discounted Price
                 </label>
                 <div className="relative text-base">
@@ -385,11 +349,7 @@ export default function AdminCreateCloth() {
                   />
                 </div>
                 {errors.discountedPrice && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
+                  <p id="title-error" className="text-xs text-red-600" role="alert">
                     {errors.discountedPrice}
                   </p>
                 )}

@@ -46,15 +46,12 @@ export default function ViewAllClothes() {
         className="color-base-100 color-base-content grid grid-cols-[repeat(auto-fit,minmax(200px,250px))] justify-center gap-1 p-10"
       >
         {/* loading skeletons */}
-        {loading &&
-          !data &&
-          ["1", "2", "3", "4"].map(() => <SkeletonLoader lines={5} />)}
+        {loading && !data && ["1", "2", "3", "4"].map(() => <SkeletonLoader lines={5} />)}
 
         {/* display data */}
         {!loading && data?.clothes.length === 0 ? (
           <p className="text-center text-base">
-            No <Shirt strokeWidth={1.25} className="inline fill-red-400" /> were
-            found
+            No <Shirt strokeWidth={1.25} className="inline fill-red-400" /> were found
           </p>
         ) : (
           data?.clothes.map((cloth) => (

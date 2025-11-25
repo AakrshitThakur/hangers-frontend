@@ -2,24 +2,14 @@ import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Shield, AlertCircle, Type, Image, IndianRupee } from "lucide-react";
-import {
-  CLOTH_MIME_TYPES,
-  TOP_3_CLOTHES,
-} from "../../constants/cloth.constants";
-import {
-  errorNotification,
-  successNotification,
-} from "../../utils/toast.utils";
+import { CLOTH_MIME_TYPES, TOP_3_CLOTHES } from "../../constants/cloth.constants";
+import { errorNotification, successNotification } from "../../utils/toast.utils";
 import { validateUpdateCloth } from "../../utils/validations/validation-cloth";
 import { Dropdown } from "../../components/small/drop-down/drop-down";
 import { CLOTH_CATEGORIES } from "../../constants/cloth.constants";
 import useFetch from "../../hooks/use-fetch";
 import PreviewFormImages from "../../components/small/preview-form-images/preview-form-images";
-import type {
-  UpdateClothResponse,
-  GetClothData,
-  GetUpdateCloth,
-} from "../../types/clothes.types";
+import type { UpdateClothResponse, GetClothData, GetUpdateCloth } from "../../types/clothes.types";
 
 // all interfaces
 interface FormErrors {
@@ -143,18 +133,10 @@ export default function AdminUpdateCloth() {
     // check for validation errors
     if (formData && typeof formData === "object") {
       // override publicIds property with publicIds state
-      formData.publicIds = allPublicIds.current.filter(
-        (p) => !publicIds.includes(p)
-      );
+      formData.publicIds = allPublicIds.current.filter((p) => !publicIds.includes(p));
 
       /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-      const {
-        _id: _,
-        images: __,
-        createdAt: ___,
-        updatedAt: ____,
-        ...update
-      } = formData;
+      const { _id: _, images: __, createdAt: ___, updatedAt: ____, ...update } = formData;
 
       // check validation errors
       const errors = validateUpdateCloth(update);
@@ -204,9 +186,7 @@ export default function AdminUpdateCloth() {
       const file = target.files[0];
       // MIME file type check
       if (!CLOTH_MIME_TYPES.includes(file.type)) {
-        errorNotification(
-          "Kindly provide a file in a valid format (.png, .jpg, or .jpeg)"
-        );
+        errorNotification("Kindly provide a file in a valid format (.png, .jpg, or .jpeg)");
         return;
       }
       if (file.size > 5 * 1024 * 1024) {
@@ -311,9 +291,7 @@ export default function AdminUpdateCloth() {
           {/* Card Header */}
           <div className="px-6 py-3">
             <h2 className="text-2xl font-semibold text-center mb-1">Sign In</h2>
-            <p className="text-base text-center">
-              Enter your credentials to access the admin panel
-            </p>
+            <p className="text-base text-center">Enter your credentials to access the admin panel</p>
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -344,11 +322,7 @@ export default function AdminUpdateCloth() {
                   />
                 </div>
                 {errors.title && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
+                  <p id="title-error" className="text-xs text-red-600" role="alert">
                     {errors.title}
                   </p>
                 )}
@@ -377,11 +351,7 @@ export default function AdminUpdateCloth() {
                   <p className="text-base">Upload File</p>
                 </div>
                 {errors.clothImages && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
+                  <p id="title-error" className="text-xs text-red-600" role="alert">
                     {errors.title}
                   </p>
                 )}
@@ -403,10 +373,7 @@ export default function AdminUpdateCloth() {
 
               {formData && typeof formData === "object" && (
                 <div className="space-y-2">
-                  <label
-                    htmlFor="category"
-                    className="block text-sm font-medium"
-                  >
+                  <label htmlFor="category" className="block text-sm font-medium">
                     Category
                   </label>
                   <Dropdown<GetUpdateCloth>
@@ -416,11 +383,7 @@ export default function AdminUpdateCloth() {
                     selectedOption={formData.category}
                   />
                   {errors.category && (
-                    <p
-                      id="title-error"
-                      className="text-xs text-red-600"
-                      role="alert"
-                    >
+                    <p id="title-error" className="text-xs text-red-600" role="alert">
                       {errors.category}
                     </p>
                   )}
@@ -429,10 +392,7 @@ export default function AdminUpdateCloth() {
 
               {formData && typeof formData === "object" && (
                 <div className="space-y-2">
-                  <label
-                    htmlFor="is-top-3"
-                    className="block text-sm font-medium"
-                  >
+                  <label htmlFor="is-top-3" className="block text-sm font-medium">
                     Is this garment in the top three?
                   </label>
                   <Dropdown<GetUpdateCloth>
@@ -442,11 +402,7 @@ export default function AdminUpdateCloth() {
                     selectedOption={`${formData.isTop3}`}
                   />
                   {errors.isTop3 && (
-                    <p
-                      id="title-error"
-                      className="text-xs text-red-600"
-                      role="alert"
-                    >
+                    <p id="title-error" className="text-xs text-red-600" role="alert">
                       {errors.isTop3}
                     </p>
                   )}
@@ -455,10 +411,7 @@ export default function AdminUpdateCloth() {
 
               {/* Actual price field */}
               <div className="space-y-2">
-                <label
-                  htmlFor="actual-price"
-                  className="block text-sm font-medium"
-                >
+                <label htmlFor="actual-price" className="block text-sm font-medium">
                   Actual Price
                 </label>
                 <div className="relative text-base">
@@ -474,11 +427,7 @@ export default function AdminUpdateCloth() {
                   />
                 </div>
                 {errors.actualPrice && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
+                  <p id="title-error" className="text-xs text-red-600" role="alert">
                     {errors.actualPrice}
                   </p>
                 )}
@@ -486,10 +435,7 @@ export default function AdminUpdateCloth() {
 
               {/* Discounted price field */}
               <div className="space-y-2">
-                <label
-                  htmlFor="discounted-price"
-                  className="block text-sm font-medium"
-                >
+                <label htmlFor="discounted-price" className="block text-sm font-medium">
                   Discounted Price
                 </label>
                 <div className="relative text-base">
@@ -505,11 +451,7 @@ export default function AdminUpdateCloth() {
                   />
                 </div>
                 {errors.discountedPrice && (
-                  <p
-                    id="title-error"
-                    className="text-xs text-red-600"
-                    role="alert"
-                  >
+                  <p id="title-error" className="text-xs text-red-600" role="alert">
                     {errors.discountedPrice}
                   </p>
                 )}

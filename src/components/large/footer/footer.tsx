@@ -1,4 +1,4 @@
-import { Heart, Instagram, Youtube, Github } from "lucide-react";
+import { Heart } from "lucide-react";
 
 export default function Footer() {
   const navigationLinks = [
@@ -17,12 +17,9 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start">
             <h3 className="text-lg font-semibold mb-2">Navigation</h3>
             <ul className="space-y-2">
-              {navigationLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="hover-bg rounded-md px-3 py-2 text-sm"
-                  >
+              {navigationLinks.map((link, idx) => (
+                <li key={idx}>
+                  <a href={link.href} className="hover-bg rounded-md px-3 py-2 text-sm">
                     {link.name}
                   </a>
                 </li>
@@ -36,23 +33,21 @@ export default function Footer() {
               <Heart className="mr-2" />
               <span>Made with passion</span>
             </div>
-            <p className="text-center text-sm">
-              © {currentYear} Hanger Readymade Collection. All rights reserved.
-            </p>
+            <p className="text-center text-sm">© {currentYear} Hanger Readymade Collection. All rights reserved.</p>
           </div>
 
           {/* Social Media Icons */}
           <div className="flex flex-col items-center md:items-end">
             <h3 className="text-lg font-semibold mb-2">Follow Us</h3>
-            <div className="flex space-x-4">
-              <a href="">
-                <Youtube strokeWidth={1.25} className="text-sm" />
+            <div className="flex justify-center items-center gap-3">
+              <a href="" className="w-5 h-5">
+                <img src="\logos\x-logo-white.png" className="w-full h-full" alt="X icon" />
               </a>
-              <a href="">
-                <Instagram strokeWidth={1.25} className="text-sm" />
+              <a href="" className="w-7 h-7">
+                <img src="\logos\linkedin-logo.png" className="w-full h-full" alt="LinkedIn icon" />
               </a>
-              <a href="">
-                <Github strokeWidth={1.25} className="text-sm" />
+              <a href="" className="w-7 h-7">
+                <img src="/logos/github-logo.png" className="w-full h-full" alt="GitHub icon" />
               </a>
             </div>
           </div>

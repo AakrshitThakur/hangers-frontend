@@ -2,7 +2,7 @@ export default function About() {
   return (
     <div
       id="about-page"
-      className="w-full max-w-7xl min-h-[85vh] flex flex-col justify-center items-center gap-3 p-5 sm:p-7 md:p-9"
+      className="w-full min-h-[85vh] flex flex-col justify-center items-center gap-3 p-5 sm:p-7 md:p-9"
     >
       <div className="flex flex-col md:flex-row justify-center items-center gap-3">
         <div>

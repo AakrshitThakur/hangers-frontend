@@ -22,10 +22,7 @@ export default function StaticDropDown(props: StaticDropDownProps) {
   // toggle-off on click outside the drop-down
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event?.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event?.target as Node)) {
         setIsOpen(false);
       }
     }
@@ -43,15 +40,9 @@ export default function StaticDropDown(props: StaticDropDownProps) {
         {props.headings?.select || "Select"}
       </button>
       {isOpen && (
-        <section
-          className={`absolute top-full left-0 min-w-[150px] mt-1 rounded-xl p-1 ${props.classNames?.options}`}
-        >
+        <section className={`absolute top-full left-0 min-w-[150px] mt-1 rounded-xl p-1 ${props.classNames?.options}`}>
           {props.options.map((i, idx) => (
-            <a
-              key={idx}
-              href={i.href}
-              className="inline-block w-full px-3 py-2 text-xs text-left rounded-lg hover-bg"
-            >
+            <a key={idx} href={i.href} className="inline-block w-full px-3 py-2 text-xs text-left rounded-lg hover-bg">
               {i.label}
             </a>
           ))}
